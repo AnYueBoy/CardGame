@@ -12,10 +12,15 @@ public class FrameLaunch : MonoBehaviour {
         this._application.Bootstrap (
             new SystemProviderBootstrap (this),
             new CustomProviderBootstrap ());
+
+        App.DebugLevel = DebugLevel.Development;
     }
 
     void Start () {
         this._application.Init ();
+        var cardData = App.Make<IConfigManager> ().GetCardDataById (1);
+        var cardList = App.Make<IConfigManager> ().GetCardDataByRoleType (RoleType.Warrior);
+        Debug.Log ($"test {App.DebugLevel}");
     }
 
     void Update () {

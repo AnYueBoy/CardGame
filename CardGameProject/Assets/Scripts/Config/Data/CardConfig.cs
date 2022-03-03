@@ -8,7 +8,7 @@ public class CardConfig : IConfig {
     private Dictionary<RoleType, List<CardData>> cardRoleDic = new Dictionary<RoleType, List<CardData>> ();
 
     public CardData GetCardDataById (int id) {
-        return this.cards[id];
+        return this.cardDic[id];
     }
 
     public List<CardData> GetCardDataByRoleType (RoleType roleType) {

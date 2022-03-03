@@ -11,7 +11,7 @@ public class ConfigManager : IConfigManager {
     }
 
     private void loadAllConfig () {
-        this.loadConfig<CardConfig> (ConfigUrl.cardUrl);
+        this.cardConfig = this.loadConfig<CardConfig> (ConfigUrl.cardUrl);
     }
     public CardData GetCardDataById (int id) {
         return this.cardConfig.GetCardDataById (id);
