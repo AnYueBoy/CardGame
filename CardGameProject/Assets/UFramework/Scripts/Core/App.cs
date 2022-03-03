@@ -3,14 +3,10 @@ using UFramework.Container;
 
 namespace UFramework.Core {
     public abstract class App {
-        /// <summary>
-        /// The IApplication instance.
-        /// </summary>
         private static IApplication that;
 
-        /// <summary>
-        /// Callback when a new IApplication instance is created.
-        /// </summary>
+        private static event Action<IApplication> RaiseOnNewApplication;
+
         public static event Action<IApplication> OnNewApplication {
             add {
                 RaiseOnNewApplication += value;
@@ -21,14 +17,6 @@ namespace UFramework.Core {
             remove => RaiseOnNewApplication -= value;
         }
 
-        /// <summary>
-        /// Callback when a new IApplication instance is created.
-        /// </summary>
-        private static event Action<IApplication> RaiseOnNewApplication;
-
-        /// <summary>
-        /// Gets or Sets the IApplication instance.
-        /// </summary>
         public static IApplication That {
             get {
                 return that;
@@ -251,6 +239,24 @@ namespace UFramework.Core {
             return That.Factory<TService> (userParams);
         }
 
+        public static void Watch<TService> (Action method) {
+            That.Watch<TService> (method);
+        }
+
+        public static void Watch<TService> (Action<TService> method) {
+            That.Watch (method);
+        }
+
+        public static string Type2Service (Type type) {
+            return That.Type2Service (type);
+        }
+
+        public static string Type2Service<TService> () {
+            return That.Type2Service<TService> ();
+        }
+
+        #region 事件周期
+
         public static IContainer OnRelease (Action<IBindData, object> action) {
             return That.OnRelease (action);
         }
@@ -299,20 +305,6 @@ namespace UFramework.Core {
             return That.OnAfterResolving (closure);
         }
 
-        public static void Watch<TService> (Action method) {
-            That.Watch<TService> (method);
-        }
-
-        public static void Watch<TService> (Action<TService> method) {
-            That.Watch (method);
-        }
-
-        public static string Type2Service (Type type) {
-            return That.Type2Service (type);
-        }
-
-        public static string Type2Service<TService> () {
-            return That.Type2Service<TService> ();
-        }
+        #endregion
     }
 }
