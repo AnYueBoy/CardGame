@@ -1,10 +1,10 @@
 public interface ISlot {
 
-    void DrawStage ();
+    void DrawStage (RoleData from, RoleData to = null);
 
-    void ReadyStage ();
+    void ReadyStage (RoleData from, RoleData to = null);
 
-    void EndStage ();
+    void EndStage (RoleData from, RoleData to = null);
 
-    void Trigger ();
+    void Trigger (RoleData from, RoleData to = null);
 }

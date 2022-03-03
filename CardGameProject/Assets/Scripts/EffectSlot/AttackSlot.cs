@@ -1,17 +1,13 @@
 public class AttackSlot : ISlot {
-    public void DrawStage () {
-        throw new System.NotImplementedException ();
+    public void DrawStage (RoleData from, RoleData to = null) {
     }
 
-    public void EndStage () {
-        throw new System.NotImplementedException ();
+    public void EndStage (RoleData from, RoleData to = null) {
     }
 
-    public void ReadyStage () {
-        throw new System.NotImplementedException ();
+    public void ReadyStage (RoleData from, RoleData to = null) {
     }
 
-    public void Trigger () {
-
+    public void Trigger (RoleData from, RoleData to = null) {
     }
 }
