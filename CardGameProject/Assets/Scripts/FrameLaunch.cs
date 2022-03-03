@@ -2,6 +2,7 @@ using UnityEngine;
 using UApplication = UFramework.Core.Application;
 using UFramework.Bootstarp;
 using UFramework.Core;
+using UFramework.GameCommon;
 using UFramework.Promise;
 using UFramework.Tween;
 
@@ -18,9 +19,13 @@ public class FrameLaunch : MonoBehaviour {
 
     void Start () {
         this._application.Init ();
-        var cardData = App.Make<IConfigManager> ().GetCardDataById (1);
-        var cardList = App.Make<IConfigManager> ().GetCardDataByRoleType (RoleType.Warrior);
-        Debug.Log ($"test {App.DebugLevel}");
+        GameObject cardPrefab = App.Make<IAssetsManager> ().GetAssetByUrlSync<GameObject> ("Card");
+        GameObject cardNode = App.Make<IObjectPool> ().RequestInstance (cardPrefab);
+        cardNode.transform.SetParent(App.Make<INodeManager>().CanvasTrans);
+        cardNode.transform.localPosition = Vector3.zero;
+
+        CardData cardData = App.Make<IConfigManager> ().GetCardDataById (1);
+        cardNode.GetComponent<Card> ().Init (cardData);
     }
 
     void Update () {

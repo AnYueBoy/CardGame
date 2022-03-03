@@ -2,7 +2,7 @@ using UFramework.Core;
 public class CustomProviderBootstrap : IBootstrap {
     public void Bootstrap () {
         IServiceProvider[] providerArray = new IServiceProvider[] {
-            new ProviderConfigManager ()
+            new ProviderConfigManager (),
         };
 
         foreach (IServiceProvider provider in providerArray) {

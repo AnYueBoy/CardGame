@@ -6,7 +6,9 @@
             "cardDescribe": "造成9点伤害",
             "consume": 1,
             "belongRole": 0,
-            "rarity": 0
+            "cardType": 0,
+            "rarity": 2,
+            "cardIcon": "Textures/Card/CardIcon/Hit"
         }
     ]
 }

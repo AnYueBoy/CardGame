@@ -19,13 +19,11 @@ public class CardConfig : IConfig {
         foreach (CardData cardData in cards) {
             cardDic.Add (cardData.id, cardData);
 
-            if (!cardRoleDic.TryGetValue ((RoleType) cardData.belongRole, out List<CardData> cardRoleList)) {
+            if (!cardRoleDic.TryGetValue (cardData.belongRole, out List<CardData> cardRoleList)) {
                 cardRoleList = new List<CardData> ();
-                cardRoleDic.Add ((RoleType) cardData.belongRole, cardRoleList);
+                cardRoleDic.Add (cardData.belongRole, cardRoleList);
             }
-
             cardRoleList.Add (cardData);
         }
-
     }
 }

@@ -7,7 +7,11 @@ public class CardData {
 
     public int consume;
 
-    public int belongRole;
+    public RoleType belongRole;
 
-    public int rarity;
+    public CardType cardType;
+
+    public CardRarity rarity;
+
+    public string cardIcon;
 }
