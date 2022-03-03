@@ -1,17 +1,13 @@
-public class AttackSlot : ISlot {
-    public void DrawStage () {
+public class TurnManager : ITurnManager {
+    public void TurnToDrawStage () {
         throw new System.NotImplementedException ();
     }
 
-    public void EndStage () {
+    public void TurnToEndStage () {
         throw new System.NotImplementedException ();
     }
 
-    public void ReadyStage () {
+    public void TurnToReadyStage () {
         throw new System.NotImplementedException ();
-    }
-
-    public void Trigger () {
-
     }
 }

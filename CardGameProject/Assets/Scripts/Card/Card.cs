@@ -25,9 +25,11 @@ public class Card : MonoBehaviour {
 
     private CardData cardData;
 
+    private ISlot _slot;
+
     public void Init (CardData cardData) {
         this.cardData = cardData;
-        this.RefreshCardInfo();
+        this.RefreshCardInfo ();
     }
 
     private void RefreshCardInfo () {
