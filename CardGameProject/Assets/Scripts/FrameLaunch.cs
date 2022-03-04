@@ -19,7 +19,8 @@ public class FrameLaunch : MonoBehaviour {
 
     void Start () {
         this._application.Init ();
-      
+
+        App.Make<IUIManager> ().ShowBoard<StartBoard> ();
     }
 
     void Update () {
