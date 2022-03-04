@@ -93,10 +93,10 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     public void OnDrag (PointerEventData eventData) {
         RectTransformUtility.ScreenPointToLocalPointInRectangle (this.parentRectTrans, eventData.position, eventData.enterEventCamera, out Vector2 localPos);
         this.rectTransform.localPosition = localPos;
-        this.Trigger (this.role);
     }
 
     public void OnEndDrag (PointerEventData eventData) {
         Debug.Log ("drag end");
+         this.Trigger (this.role);
     }
 }
