@@ -12,6 +12,17 @@ public class BattleManager : IBattleManager {
         player.Init ();
         roleList.Add (player);
         roleList.AddRange (enemyList);
+
+        GameObject cardPrefab = App.Make<IAssetsManager> ().GetAssetByUrlSync<GameObject> ("Card");
+        GameObject cardNode = App.Make<IObjectPool> ().RequestInstance (cardPrefab);
+        cardNode.transform.SetParent (App.Make<INodeManager> ().CanvasTrans);
+        cardNode.transform.localPosition = Vector3.zero;
+
+        CardData cardData = App.Make<IConfigManager> ().GetCardDataById (1);
+        Card card = cardNode.GetComponent<Card> ();
+        card.Init (cardData);
+        card.SetRole (player);
+
     }
 
     public void InitRoleCard () { }

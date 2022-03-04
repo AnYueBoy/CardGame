@@ -14,24 +14,25 @@ public class Role : MonoBehaviour {
 
     public void DrawStage () {
         foreach (var card in cards) {
-            card.DrawStage (this);
+            card.DrawStage ();
         }
     }
 
     public void ReadyStage () {
         foreach (var card in cards) {
-            card.ReadyStage (this);
+            card.ReadyStage ();
         }
     }
 
     public void EndStage () {
         foreach (var card in cards) {
-            card.EndStage (this);
+            card.EndStage ();
         }
     }
 
     public void Damage (int value) {
         this.roleData.hp -= value;
+        Debug.Log ($"curHp{this.roleData.hp}");
     }
 
 }
