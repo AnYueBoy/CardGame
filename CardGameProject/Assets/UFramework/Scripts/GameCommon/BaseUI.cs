@@ -8,8 +8,8 @@
 namespace UFramework.GameCommon {
     using UnityEngine;
 
-    public class BaseUI : MonoBehaviour {
+    public abstract class BaseUI : MonoBehaviour {
 
-        public virtual void OnShow (params object[] args) { }
+        public abstract void OnShow (params object[] args);
     }
 }

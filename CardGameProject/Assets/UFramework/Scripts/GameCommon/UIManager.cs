@@ -55,8 +55,16 @@ namespace UFramework.GameCommon {
             this.showUI (uiName, args);
         }
 
+        public void ShowDialog<T> (params object[] args) where T : BaseUI {
+            this.ShowDialog (typeof (T).ToString (), args);
+        }
+
         public void CloseDialog (string uiName) {
             this.hideUI (uiName);
+        }
+
+        public void CloseDialog<T> () where T : BaseUI {
+            this.CloseDialog (typeof (T).ToString ());
         }
 
         private void hideUI (string uiName) {
@@ -84,11 +92,7 @@ namespace UFramework.GameCommon {
 
                 GameObject uiNode = App.Make<IObjectPool> ().RequestInstance (prefab);
                 RectTransform rectTransform = uiNode.GetComponent<RectTransform> ();
-                rectTransform.SetParent (this.uiRoot);
-                rectTransform.localPosition = Vector3.zero;
-                rectTransform.localScale = Vector3.one;
-                rectTransform.offsetMax = Vector2.zero;
-                rectTransform.offsetMin = Vector2.zero;
+                rectTransform.SetParent (this.uiRoot, false);
                 targetUI = uiNode.GetComponent<BaseUI> ();
                 this.uiDic.Add (uiName, targetUI);
                 uiNode.SetActive (true);

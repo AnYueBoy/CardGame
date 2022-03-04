@@ -9,7 +9,7 @@ public class AdaptUI : MonoBehaviour {
     [SerializeField] private float topOffset = 0;
     [SerializeField] private RectTransform bottomRectTrans;
     [SerializeField] private float bottomOffset = 0;
-    private void OnEnable () {
+    private void Awake () {
         Rect safeArea = Screen.safeArea;
 
         if (leftRectTrans != null) {
