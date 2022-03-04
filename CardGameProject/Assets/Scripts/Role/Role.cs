@@ -5,7 +5,20 @@ using UnityEngine;
 public class Role : MonoBehaviour {
     private RoleData roleData;
 
-    public bool Trigger () {
-        return false;
+    public void DrawStage () {
+
     }
+
+    public void ReadyStage () {
+
+    }
+
+    public void EndStage () {
+
+    }
+
+    public void Trigger (Role to = null) {
+
+    }
+
 }

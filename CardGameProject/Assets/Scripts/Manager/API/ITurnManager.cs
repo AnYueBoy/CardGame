@@ -1,8 +1,8 @@
 public interface ITurnManager {
 
-    void TurnToDrawStage ();
+    TurnStage GetCurStage ();
 
-    void TurnToReadyStage ();
+    void NextStage ();
 
-    void TurnToEndStage ();
+    void SetActiveRole (Role role);
 }
