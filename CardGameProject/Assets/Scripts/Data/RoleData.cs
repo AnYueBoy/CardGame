@@ -7,4 +7,11 @@ public class RoleData {
 
     public int hp;
 
+    public RoleData () {
+        roleType = RoleType.Warrior;
+        cards = new List<int> ();
+        cards.Add (1);
+        hp = 100;
+    }
+
 }

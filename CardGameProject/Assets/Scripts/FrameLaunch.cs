@@ -14,14 +14,14 @@ public class FrameLaunch : MonoBehaviour {
             new SystemProviderBootstrap (this),
             new CustomProviderBootstrap ());
 
-        App.DebugLevel = DebugLevel.Development;
+        App.DebugLevel = DebugLevel.Production;
     }
 
     void Start () {
         this._application.Init ();
         GameObject cardPrefab = App.Make<IAssetsManager> ().GetAssetByUrlSync<GameObject> ("Card");
         GameObject cardNode = App.Make<IObjectPool> ().RequestInstance (cardPrefab);
-        cardNode.transform.SetParent(App.Make<INodeManager>().CanvasTrans);
+        cardNode.transform.SetParent (App.Make<INodeManager> ().CanvasTrans);
         cardNode.transform.localPosition = Vector3.zero;
 
         CardData cardData = App.Make<IConfigManager> ().GetCardDataById (1);
@@ -32,5 +32,6 @@ public class FrameLaunch : MonoBehaviour {
         float deltaTime = Time.deltaTime;
         App.Make<IPromiseTimer> ().LocalUpdate (deltaTime);
         App.Make<ITweenManager> ().LocalUpdate (deltaTime);
+        App.Make<IBattleManager> ().LocalUpdate (deltaTime);
     }
 }

@@ -2,8 +2,9 @@ using System;
 using UFramework.Core;
 using UFramework.GameCommon;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
-public class Card : MonoBehaviour {
+public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
 
     [SerializeField] private Image cardBg;
 
@@ -27,9 +28,14 @@ public class Card : MonoBehaviour {
 
     private ISlot _slot;
 
+    private RectTransform rectTransform;
+    private RectTransform parentRectTrans;
+
     public void Init (CardData cardData) {
         this.cardData = cardData;
         this.RefreshCardInfo ();
+        this.rectTransform = GetComponent<RectTransform> ();
+        this.parentRectTrans = this.rectTransform.parent.GetComponent<RectTransform> ();
     }
 
     private void RefreshCardInfo () {
@@ -70,7 +76,20 @@ public class Card : MonoBehaviour {
         _slot.EndStage (from, cardData.effectValue, to);
     }
 
-    public void Trigger (Role from, Role to = null) {
+    private void Trigger (Role from, Role to = null) {
         _slot.Trigger (from, cardData.effectValue, to);
+    }
+
+    public void OnBeginDrag (PointerEventData eventData) {
+        Debug.Log ("drag start");
+    }
+
+    public void OnDrag (PointerEventData eventData) {
+        RectTransformUtility.ScreenPointToLocalPointInRectangle (this.parentRectTrans, eventData.position, eventData.enterEventCamera, out Vector2 localPos);
+        this.rectTransform.localPosition = localPos;
+    }
+
+    public void OnEndDrag (PointerEventData eventData) {
+        Debug.Log ("drag end");
     }
 }
