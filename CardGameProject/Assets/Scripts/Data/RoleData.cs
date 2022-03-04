@@ -5,4 +5,6 @@ public class RoleData {
 
     public List<int> cards;
 
+    public int hp;
+
 }

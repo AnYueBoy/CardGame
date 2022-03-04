@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 public class CardData {
     public int id;
 
@@ -14,4 +15,6 @@ public class CardData {
     public CardRarity rarity;
 
     public string cardIcon;
+
+    public List<int> effectValue;
 }

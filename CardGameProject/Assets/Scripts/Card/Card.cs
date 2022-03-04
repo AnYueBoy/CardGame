@@ -57,4 +57,20 @@ public class Card : MonoBehaviour {
         this.cardDescribe.text = this.cardData.cardDescribe;
         this.cardType.text = GameUtil.GetCardTypeValue (cardType);
     }
+
+    public void DrawStage (Role from, Role to = null) {
+        _slot.DrawStage (from, cardData.effectValue, to);
+    }
+
+    public void ReadyStage (Role from, Role to = null) {
+        _slot.ReadyStage (from, cardData.effectValue, to);
+    }
+
+    public void EndStage (Role from, Role to = null) {
+        _slot.EndStage (from, cardData.effectValue, to);
+    }
+
+    public void Trigger (Role from, Role to = null) {
+        _slot.Trigger (from, cardData.effectValue, to);
+    }
 }

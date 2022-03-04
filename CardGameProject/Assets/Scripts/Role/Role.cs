@@ -5,20 +5,28 @@ using UnityEngine;
 public class Role : MonoBehaviour {
     private RoleData roleData;
 
-    public void DrawStage () {
+    private List<Card> cards;
 
+    public void DrawStage () {
+        foreach (var card in cards) {
+            card.DrawStage (this);
+        }
     }
 
     public void ReadyStage () {
-
+        foreach (var card in cards) {
+            card.ReadyStage (this);
+        }
     }
 
     public void EndStage () {
-
+        foreach (var card in cards) {
+            card.EndStage (this);
+        }
     }
 
-    public void Trigger (Role to = null) {
-
+    public void Damage (int value) {
+        this.roleData.hp -= value;
     }
 
 }
