@@ -4,14 +4,14 @@ using UFramework.GameCommon;
 using UnityEngine;
 public class BattleManager : IBattleManager {
     private List<Role> roleList;
-    public void BuildBattleData (List<Role> enemyList) {
-        roleList = new List<Role> ();
+    public void BuildBattleData (List<Role> roleList) {
+        this.roleList = new List<Role> ();
         GameObject rolePrefab = App.Make<IAssetsManager> ().GetAssetByUrlSync<GameObject> ("Role");
         GameObject roleNode = App.Make<IObjectPool> ().RequestInstance (rolePrefab);
         Role player = roleNode.GetComponent<Role> ();
         player.Init ();
-        roleList.Add (player);
-        roleList.AddRange (enemyList);
+        this.roleList.Add (player);
+        this.roleList.AddRange (roleList);
 
         GameObject cardPrefab = App.Make<IAssetsManager> ().GetAssetByUrlSync<GameObject> ("Card");
         GameObject cardNode = App.Make<IObjectPool> ().RequestInstance (cardPrefab);
