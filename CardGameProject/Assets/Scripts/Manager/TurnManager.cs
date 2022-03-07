@@ -8,8 +8,8 @@ public class TurnManager : ITurnManager {
         curRole.DrawStage ();
     }
 
-    private void TurnToReadyStage () {
-        this.curTurnStage = TurnStage.ReadyStage;
+    private void TurnToMainStage () {
+        this.curTurnStage = TurnStage.MainStage;
         curRole.ReadyStage ();
     }
 
@@ -21,10 +21,10 @@ public class TurnManager : ITurnManager {
     public void NextStage () {
         switch (curTurnStage) {
             case TurnStage.DrawStage:
-                TurnToReadyStage ();
+                TurnToMainStage ();
                 break;
 
-            case TurnStage.ReadyStage:
+            case TurnStage.MainStage:
                 TurnToEndStage ();
                 break;
 

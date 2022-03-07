@@ -3,7 +3,7 @@ public enum TurnStage {
 
     DrawStage,
 
-    ReadyStage,
+    MainStage,
 
     EndStage,
 }
