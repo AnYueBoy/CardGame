@@ -7,7 +7,6 @@ public class BattleBoard : BaseUI {
     [SerializeField] private RectTransform cardParentTrans;
     public override void OnShow (params object[] args) {
 
-        App.Make<IBattleManager> ().InitRectTrans (cardParentTrans);
     }
 
     private void SpawnRoles () {
@@ -17,12 +16,16 @@ public class BattleBoard : BaseUI {
         GameObject playerNode = App.Make<IObjectPool> ().RequestInstance (rolePrefab);
         playerNode.transform.SetParent (rolesTrans);
         Role player = playerNode.GetComponent<Role> ();
+        // 设置玩家卡牌父节点
+        player.SetCardParent (cardParentTrans);
+        player.Init (RoleType.Warrior);
         roleList.Add (player);
 
         GameObject enemyNode = App.Make<IObjectPool> ().RequestInstance (rolePrefab);
         enemyNode.transform.SetParent (rolesTrans);
         Role enemy = enemyNode.GetComponent<Role> ();
         roleList.Add (enemy);
+        enemy.Init (RoleType.Enemy);
 
         App.Make<IBattleManager> ().BuildBattleData (roleList);
     }

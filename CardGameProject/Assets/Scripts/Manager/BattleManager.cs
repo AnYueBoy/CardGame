@@ -4,17 +4,11 @@ using UFramework.GameCommon;
 using UnityEngine;
 public class BattleManager : IBattleManager {
     private List<Role> roleList;
-    private RectTransform cardParentTrans;
-
-    public void InitRectTrans (RectTransform cardParentTrans) {
-        this.cardParentTrans = cardParentTrans;
-    }
-
     public void BuildBattleData (List<Role> roleList) {
         this.roleList = roleList;
-        foreach (var role in roleList) {
-            role.Init ();
-        }
+        // foreach (var role in roleList) {
+        //     role.Init ();
+        // }
 
         // GameObject cardPrefab = App.Make<IAssetsManager> ().GetAssetByUrlSync<GameObject> ("Card");
         // GameObject cardNode = App.Make<IObjectPool> ().RequestInstance (cardPrefab);

@@ -7,8 +7,8 @@ public class RoleData {
 
     public int hp;
 
-    public RoleData () {
-        roleType = RoleType.Warrior;
+    public RoleData (RoleType roleType) {
+        this.roleType = roleType;
         cards = new List<int> ();
         cards.Add (1);
         hp = 100;

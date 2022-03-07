@@ -7,9 +7,15 @@ public class Role : MonoBehaviour {
 
     private List<Card> cards;
 
-    public void Init () {
-        roleData = new RoleData ();
+    private RectTransform cardParentTrans;
+
+    public void Init (RoleType roleType) {
+        roleData = new RoleData (roleType);
         cards = new List<Card> ();
+    }
+
+    public void SetCardParent (RectTransform cardParentTrans) {
+        this.cardParentTrans = cardParentTrans;
     }
 
     #region  卡牌周期
