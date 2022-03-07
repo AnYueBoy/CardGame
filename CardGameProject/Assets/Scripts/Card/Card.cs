@@ -74,8 +74,8 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         _slot.DrawStage (this.role, cardData.effectValue, to);
     }
 
-    public void ReadyStage (Role to = null) {
-        _slot.ReadyStage (this.role, cardData.effectValue, to);
+    public void MainStage (Role to = null) {
+        _slot.MainStage (this.role, cardData.effectValue, to);
     }
 
     public void EndStage (Role to = null) {

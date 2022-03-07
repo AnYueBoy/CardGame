@@ -4,7 +4,11 @@ using UFramework.GameCommon;
 using UnityEngine;
 public class BattleBoard : BaseUI {
     [SerializeField] private RectTransform rolesTrans;
-    public override void OnShow (params object[] args) { }
+    [SerializeField] private RectTransform cardParentTrans;
+    public override void OnShow (params object[] args) {
+
+        App.Make<IBattleManager> ().InitRectTrans (cardParentTrans);
+    }
 
     private void SpawnRoles () {
         // 生成玩家与敌人

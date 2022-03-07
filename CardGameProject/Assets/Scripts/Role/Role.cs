@@ -12,15 +12,16 @@ public class Role : MonoBehaviour {
         cards = new List<Card> ();
     }
 
+    #region  卡牌周期
     public void DrawStage () {
         foreach (var card in cards) {
             card.DrawStage ();
         }
     }
 
-    public void ReadyStage () {
+    public void MainStage () {
         foreach (var card in cards) {
-            card.ReadyStage ();
+            card.MainStage ();
         }
     }
 
@@ -29,10 +30,20 @@ public class Role : MonoBehaviour {
             card.EndStage ();
         }
     }
+    #endregion
 
     public void Damage (int value) {
         this.roleData.hp -= value;
         Debug.Log ($"curHp{this.roleData.hp}");
+    }
+
+    private void AddCard (Card card) {
+        this.cards.Add (card);
+        this.OrderCards ();
+    }
+
+    private void OrderCards () {
+
     }
 
 }

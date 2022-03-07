@@ -4,7 +4,7 @@ public interface ISlot {
 
     void DrawStage (Role from, List<int> effectValue, Role to = null);
 
-    void ReadyStage (Role from, List<int> effectValue, Role to = null);
+    void MainStage (Role from, List<int> effectValue, Role to = null);
 
     void EndStage (Role from, List<int> effectValue, Role to = null);
 

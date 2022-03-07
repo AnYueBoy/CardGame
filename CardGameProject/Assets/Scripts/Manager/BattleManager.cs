@@ -4,6 +4,12 @@ using UFramework.GameCommon;
 using UnityEngine;
 public class BattleManager : IBattleManager {
     private List<Role> roleList;
+    private RectTransform cardParentTrans;
+
+    public void InitRectTrans (RectTransform cardParentTrans) {
+        this.cardParentTrans = cardParentTrans;
+    }
+
     public void BuildBattleData (List<Role> roleList) {
         this.roleList = roleList;
         foreach (var role in roleList) {
@@ -35,4 +41,5 @@ public class BattleManager : IBattleManager {
             App.Make<ITurnManager> ().SetActiveRole (roleList[curRoleIndex]);
         }
     }
+
 }

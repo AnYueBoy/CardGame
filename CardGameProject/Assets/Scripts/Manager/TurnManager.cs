@@ -10,7 +10,7 @@ public class TurnManager : ITurnManager {
 
     private void TurnToMainStage () {
         this.curTurnStage = TurnStage.MainStage;
-        curRole.ReadyStage ();
+        curRole.MainStage ();
     }
 
     private void TurnToEndStage () {
