@@ -10,12 +10,15 @@ public class Role : MonoBehaviour {
 
     private RectTransform cardParentTrans;
 
+    private int normalMaxCardCount;
+    private float totalAngle;
     public void Init (RoleType roleType) {
         roleData = new RoleData (roleType);
         cards = new List<Card> ();
 
-        float halfAngle = Mathf.Asin (arcRadius / radius);
-        this.totalCardCount = halfAngle / angleInterval * 2 + 1;
+        float halfRadians = Mathf.Asin (arcRadius / 2 / radius);
+        totalAngle = 180 / Mathf.PI * halfRadians * 2;
+        normalMaxCardCount = (int) (totalAngle / angleInterval) + 1;
     }
 
     public void SetCardParent (RectTransform cardParentTrans) {
@@ -44,7 +47,7 @@ public class Role : MonoBehaviour {
 
     public void Damage (int value) {
         this.roleData.hp -= value;
-        // Debug.Log ($"curHp{this.roleData.hp}");
+        Debug.Log ($"curHp{this.roleData.hp}");
     }
 
     public void AddCard (Card card) {
@@ -53,28 +56,30 @@ public class Role : MonoBehaviour {
         this.OrderCards ();
     }
 
-    private float radius = 800f;
+    private readonly float radius = 800f;
     private readonly float arcRadius = 500f;
-    private float angleInterval = 15f;
-    private float totalCardCount;
+    private readonly float angleInterval = 15f;
 
-    public void OrderCards (float _radius = 0, float _angleInterval = 0) {
-        if (_radius > 0) {
-            radius = _radius;
-        }
-        if (_angleInterval > 0) {
-            angleInterval = _angleInterval;
-        }
+    public void OrderCards () {
         int cardsCount = cards.Count;
         int leftIndex = cardsCount / 2;
         float curAngleInterval = this.angleInterval;
 
         bool isOddNumber = CommonUtil.isOddNumber (cardsCount);
+        if (cardsCount > this.normalMaxCardCount) {
+            // 奇数转偶数
+            if (isOddNumber) {
+                cardsCount++;
+            }
+
+            // 重计算卡牌间距角度
+            curAngleInterval = totalAngle / cardsCount;
+        }
+
         float angle = 0;
         int cardIndex = 0;
         Vector3 targetAngle = Vector3.zero;
         Vector3 targetPos = Vector3.zero;
-        // Debug.Log ($"是否是奇数: {isOddNumber}, count: {cardsCount}");
         for (int i = -leftIndex; i <= leftIndex; i++) {
             if (i == 0 && !isOddNumber) {
                 continue;
@@ -106,11 +111,6 @@ public class Role : MonoBehaviour {
             targetPos.x = x;
             targetPos.y = y;
             card.rectTransform.localPosition = targetPos;
-
-            // Debug.Log ($"angle: {targetAngle} x: {x}, y:{y}");
         }
-
-        // Debug.Log ("===========");
     }
-
 }
