@@ -12,7 +12,7 @@ public class BattleManager : IBattleManager {
 
     public void InitRoleCard () {
         // 创建玩家手牌
-        for (var i = 0; i < 3; i++) {
+        for (var i = 0; i < 12; i++) {
             GameObject cardPrefab = App.Make<IAssetsManager> ().GetAssetByUrlSync<GameObject> ("Card");
             GameObject cardNode = App.Make<IObjectPool> ().RequestInstance (cardPrefab);
             CardData cardData = App.Make<IConfigManager> ().GetCardDataById (1);
