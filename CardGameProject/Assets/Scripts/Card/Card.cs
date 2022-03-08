@@ -28,20 +28,19 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     private ISlot _slot;
 
-    private RectTransform rectTransform;
+    public RectTransform rectTransform;
     private RectTransform parentRectTrans;
 
     public void Init (CardData cardData) {
         this.cardData = cardData;
         this.RefreshCardInfo ();
         this.rectTransform = GetComponent<RectTransform> ();
-        this.parentRectTrans = this.rectTransform.parent.GetComponent<RectTransform> ();
     }
 
     private Role role;
     public void SetRole (Role role) {
         this.role = role;
-        _slot = new AttackSlot();
+        _slot = new AttackSlot ();
     }
 
     private void RefreshCardInfo () {
@@ -87,16 +86,17 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     }
 
     public void OnBeginDrag (PointerEventData eventData) {
-        Debug.Log ("drag start");
+        // Debug.Log ("drag start");
     }
 
     public void OnDrag (PointerEventData eventData) {
+        this.parentRectTrans??= this.rectTransform.parent.GetComponent<RectTransform> ();
         RectTransformUtility.ScreenPointToLocalPointInRectangle (this.parentRectTrans, eventData.position, eventData.enterEventCamera, out Vector2 localPos);
         this.rectTransform.localPosition = localPos;
     }
 
     public void OnEndDrag (PointerEventData eventData) {
-        Debug.Log ("drag end");
-         this.Trigger (this.role);
+        // Debug.Log ("drag end");
+        this.Trigger (this.role);
     }
 }

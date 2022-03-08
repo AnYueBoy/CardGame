@@ -44,28 +44,67 @@ public class Role : MonoBehaviour {
 
     public void Damage (int value) {
         this.roleData.hp -= value;
-        Debug.Log ($"curHp{this.roleData.hp}");
+        // Debug.Log ($"curHp{this.roleData.hp}");
     }
 
-    private void AddCard (Card card) {
+    public void AddCard (Card card) {
+        card.rectTransform.SetParent (this.cardParentTrans, false);
         this.cards.Add (card);
         this.OrderCards ();
     }
 
-    private readonly float radius = 10f;
+    private readonly float radius = 150f;
     private readonly float arcRadius = 500f;
-    private readonly float angleInterval = 10f;
+    private readonly float angleInterval = 20f;
     private float totalCardCount;
 
-    private void OrderCards () {
+    public void OrderCards () {
         int cardsCount = cards.Count;
-        int midIndex = cardsCount / 2;
+        int leftIndex = cardsCount / 2;
         float curAngleInterval = this.angleInterval;
 
         bool isOddNumber = CommonUtil.isOddNumber (cardsCount);
-        for (int i = 0; i < cards.Count; i++) {
+        float angle = 0;
+        int cardIndex = 0;
+        Vector3 targetAngle = Vector3.zero;
+        Vector3 targetPos = Vector3.zero;
+        // Debug.Log ($"是否是奇数: {isOddNumber}, count: {cardsCount}");
+        for (int i = -leftIndex; i <= leftIndex; i++) {
+            if (i == 0 && !isOddNumber) {
+                continue;
+            }
 
+            if (!isOddNumber && i < 0) {
+                angle = curAngleInterval * i + (curAngleInterval / 2);
+            }
+
+            if (!isOddNumber && i > 0) {
+                angle = curAngleInterval * i - (curAngleInterval / 2);
+            }
+
+            if (isOddNumber) {
+                angle = curAngleInterval * i;
+            }
+
+            // 设置角度
+            targetAngle.z = -angle;
+
+            Card card = cards[cardIndex++];
+            card.rectTransform.localEulerAngles = targetAngle;
+
+            float radiansValue = Mathf.PI / 180f * angle;
+
+            // 设置位置
+            float x = Mathf.Sin (radiansValue) * radius;
+            float y = radius * (Mathf.Cos (radiansValue) - 1);
+            targetPos.x = x;
+            targetPos.y = y;
+            card.rectTransform.localPosition = targetPos;
+
+            // Debug.Log ($"angle: {targetAngle} x: {x}, y:{y}");
         }
+
+        // Debug.Log ("===========");
     }
 
 }

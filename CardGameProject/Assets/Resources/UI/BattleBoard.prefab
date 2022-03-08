@@ -429,7 +429,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rolesTrans: {fileID: 4252485491103621584}
-  cardParentTrans: {fileID: 0}
+  cardParentTrans: {fileID: 8091674081564793151}
 --- !u!1 &7416346361418290797
 GameObject:
   m_ObjectHideFlags: 0
@@ -516,6 +516,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Card (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 5869510164704923741, guid: b58e7915b977f884ca5820bd44320e2f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5869510164704923742, guid: b58e7915b977f884ca5820bd44320e2f, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -586,7 +590,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5869510164704923742, guid: b58e7915b977f884ca5820bd44320e2f, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -250
       objectReference: {fileID: 0}
     - target: {fileID: 5869510164704923742, guid: b58e7915b977f884ca5820bd44320e2f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -617,6 +621,10 @@ PrefabInstance:
     - target: {fileID: 5869510164704923741, guid: b58e7915b977f884ca5820bd44320e2f, type: 3}
       propertyPath: m_Name
       value: Card
+      objectReference: {fileID: 0}
+    - target: {fileID: 5869510164704923741, guid: b58e7915b977f884ca5820bd44320e2f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5869510164704923742, guid: b58e7915b977f884ca5820bd44320e2f, type: 3}
       propertyPath: m_Pivot.x
@@ -720,6 +728,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Card (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 5869510164704923741, guid: b58e7915b977f884ca5820bd44320e2f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5869510164704923742, guid: b58e7915b977f884ca5820bd44320e2f, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -790,7 +802,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5869510164704923742, guid: b58e7915b977f884ca5820bd44320e2f, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -250
       objectReference: {fileID: 0}
     - target: {fileID: 5869510164704923742, guid: b58e7915b977f884ca5820bd44320e2f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

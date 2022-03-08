@@ -25,7 +25,8 @@ public class RoleSelectDialog : BaseUI {
     }
 
     public void ConfirmClick () {
-        // App.Make<IUIManager> ().CloseDialog<RoleSelectDialog> ();
+        App.Make<IUIManager> ().CloseDialog<RoleSelectDialog> ();
+        App.Make<IUIManager> ().ShowBoard<BattleBoard> ();
     }
 
     public void BackClick () {

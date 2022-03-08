@@ -6,20 +6,21 @@ public class BattleManager : IBattleManager {
     private List<Role> roleList;
     public void BuildBattleData (List<Role> roleList) {
         this.roleList = roleList;
+        this.InitRoleCard();
 
-        // GameObject cardPrefab = App.Make<IAssetsManager> ().GetAssetByUrlSync<GameObject> ("Card");
-        // GameObject cardNode = App.Make<IObjectPool> ().RequestInstance (cardPrefab);
-        // cardNode.transform.SetParent (App.Make<INodeManager> ().CanvasTrans);
-        // cardNode.transform.localPosition = Vector3.zero;
-
-        // CardData cardData = App.Make<IConfigManager> ().GetCardDataById (1);
-        // Card card = cardNode.GetComponent<Card> ();
-        // card.Init (cardData);
-        // card.SetRole (player);
     }
 
     public void InitRoleCard () {
         // 创建玩家手牌
+        for (var i = 0; i < 3; i++) {
+            GameObject cardPrefab = App.Make<IAssetsManager> ().GetAssetByUrlSync<GameObject> ("Card");
+            GameObject cardNode = App.Make<IObjectPool> ().RequestInstance (cardPrefab);
+            CardData cardData = App.Make<IConfigManager> ().GetCardDataById (1);
+            Card card = cardNode.GetComponent<Card> ();
+            card.Init (cardData);
+            card.SetRole (roleList[0]);
+            roleList[0].AddCard (card);
+        }
     }
 
     private int curRoleIndex = 0;
