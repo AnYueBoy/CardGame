@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UFramework.FrameUtil;
 using UnityEngine;
 
 public class Role : MonoBehaviour {
@@ -12,6 +13,9 @@ public class Role : MonoBehaviour {
     public void Init (RoleType roleType) {
         roleData = new RoleData (roleType);
         cards = new List<Card> ();
+
+        float halfAngle = Mathf.Asin (arcRadius / radius);
+        this.totalCardCount = halfAngle / angleInterval * 2 + 1;
     }
 
     public void SetCardParent (RectTransform cardParentTrans) {
@@ -48,8 +52,20 @@ public class Role : MonoBehaviour {
         this.OrderCards ();
     }
 
-    private void OrderCards () {
+    private readonly float radius = 10f;
+    private readonly float arcRadius = 500f;
+    private readonly float angleInterval = 10f;
+    private float totalCardCount;
 
+    private void OrderCards () {
+        int cardsCount = cards.Count;
+        int midIndex = cardsCount / 2;
+        float curAngleInterval = this.angleInterval;
+
+        bool isOddNumber = CommonUtil.isOddNumber (cardsCount);
+        for (int i = 0; i < cards.Count; i++) {
+
+        }
     }
 
 }

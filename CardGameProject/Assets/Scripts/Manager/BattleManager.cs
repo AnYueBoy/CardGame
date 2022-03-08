@@ -6,9 +6,6 @@ public class BattleManager : IBattleManager {
     private List<Role> roleList;
     public void BuildBattleData (List<Role> roleList) {
         this.roleList = roleList;
-        // foreach (var role in roleList) {
-        //     role.Init ();
-        // }
 
         // GameObject cardPrefab = App.Make<IAssetsManager> ().GetAssetByUrlSync<GameObject> ("Card");
         // GameObject cardNode = App.Make<IObjectPool> ().RequestInstance (cardPrefab);
