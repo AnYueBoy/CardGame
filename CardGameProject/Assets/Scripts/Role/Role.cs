@@ -57,7 +57,7 @@ public class Role : MonoBehaviour {
     }
 
     private readonly float radius = 800f;
-    private readonly float arcRadius = 500f;
+    private readonly float arcRadius = 700f;
     private readonly float angleInterval = 15f;
 
     public void OrderCards () {
