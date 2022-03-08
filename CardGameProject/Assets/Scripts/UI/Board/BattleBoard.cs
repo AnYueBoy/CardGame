@@ -1,14 +1,19 @@
+using System;
 using System.Collections.Generic;
 using UFramework.Core;
 using UFramework.GameCommon;
 using UnityEngine;
+using UnityEngine.UI;
 public class BattleBoard : BaseUI {
     [SerializeField] private RectTransform rolesTrans;
     [SerializeField] private RectTransform cardParentTrans;
+    [SerializeField] private InputField radiusInput;
+    [SerializeField] private InputField angleIntervalInput;
     public override void OnShow (params object[] args) {
-
+        SpawnRoles ();
     }
 
+    private Role _player;
     private void SpawnRoles () {
         // 生成玩家与敌人
         List<Role> roleList = new List<Role> ();
@@ -16,6 +21,7 @@ public class BattleBoard : BaseUI {
         GameObject playerNode = App.Make<IObjectPool> ().RequestInstance (rolePrefab);
         playerNode.transform.SetParent (rolesTrans);
         Role player = playerNode.GetComponent<Role> ();
+        _player = player;
         // 设置玩家卡牌父节点
         player.SetCardParent (cardParentTrans);
         player.Init (RoleType.Warrior);
@@ -28,5 +34,11 @@ public class BattleBoard : BaseUI {
         enemy.Init (RoleType.Enemy);
 
         App.Make<IBattleManager> ().BuildBattleData (roleList);
+    }
+
+    public void ReOrderCard () {
+        float radiusValue = Convert.ToSingle (this.radiusInput.text);
+        float angleInterval = Convert.ToSingle (this.angleIntervalInput.text);
+        _player.OrderCards (radiusValue, angleInterval);
     }
 }

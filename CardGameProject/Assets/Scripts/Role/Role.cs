@@ -53,12 +53,18 @@ public class Role : MonoBehaviour {
         this.OrderCards ();
     }
 
-    private readonly float radius = 150f;
+    private float radius = 800f;
     private readonly float arcRadius = 500f;
-    private readonly float angleInterval = 20f;
+    private float angleInterval = 15f;
     private float totalCardCount;
 
-    public void OrderCards () {
+    public void OrderCards (float _radius = 0, float _angleInterval = 0) {
+        if (_radius > 0) {
+            radius = _radius;
+        }
+        if (_angleInterval > 0) {
+            angleInterval = _angleInterval;
+        }
         int cardsCount = cards.Count;
         int leftIndex = cardsCount / 2;
         float curAngleInterval = this.angleInterval;
