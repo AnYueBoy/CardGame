@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class BattleBoard : BaseUI {
     [SerializeField] private RectTransform rolesTrans;
     [SerializeField] private RectTransform cardParentTrans;
+
     public override void OnShow (params object[] args) {
         SpawnRoles ();
     }
@@ -31,5 +32,10 @@ public class BattleBoard : BaseUI {
         enemy.Init ();
 
         App.Make<IBattleManager> ().BuildBattleData (roleList);
+
+    }
+
+    public void EndStage () {
+        App.Make<ITurnManager> ().NextStage ();
     }
 }

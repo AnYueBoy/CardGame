@@ -28,18 +28,21 @@ public class Player : MonoBehaviour, IRole {
 
     #region  卡牌周期
     public void DrawStage () {
+        Debug.Log ("玩家进入了抽牌阶段");
         foreach (var card in cards) {
             card.DrawStage ();
         }
     }
 
     public void MainStage () {
+        Debug.Log ("玩家进入了主要阶段");
         foreach (var card in cards) {
             card.MainStage ();
         }
     }
 
     public void EndStage () {
+        Debug.Log ("玩家进入了结束阶段");
         foreach (var card in cards) {
             card.EndStage ();
         }

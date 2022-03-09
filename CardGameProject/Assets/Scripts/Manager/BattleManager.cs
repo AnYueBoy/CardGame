@@ -7,6 +7,7 @@ public class BattleManager : IBattleManager {
     public void BuildBattleData (List<IRole> roleList) {
         this.roleList = roleList;
         this.InitRoleCard ();
+        App.Make<ITurnManager> ().SetActiveRole (this.roleList[0]);
 
     }
 
