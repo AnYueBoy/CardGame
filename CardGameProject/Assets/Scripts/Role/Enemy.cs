@@ -2,7 +2,13 @@ using UFramework.Core;
 using UFramework.Promise;
 using UnityEngine;
 public class Enemy : MonoBehaviour, IRole {
-    public void Init () { }
+
+    private RoleData roleData;
+    public RoleData RoleData => roleData;
+
+    public void Init () {
+        roleData = new RoleData (RoleType.Enemy);
+    }
     public void AddCard (Card card) { }
 
     public void Damage (int value) { }

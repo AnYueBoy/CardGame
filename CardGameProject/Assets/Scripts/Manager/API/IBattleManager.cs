@@ -8,4 +8,6 @@ public interface IBattleManager {
     void InitRoleCard ();
 
     void LocalUpdate (float dt);
+
+    RoleData GetPlayerRoleData ();
 }

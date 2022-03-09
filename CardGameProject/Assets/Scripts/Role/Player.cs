@@ -6,6 +6,8 @@ using UnityEngine;
 public class Player : MonoBehaviour, IRole {
     private RoleData roleData;
 
+    public RoleData RoleData => roleData;
+
     private List<Card> cards;
 
     private RectTransform cardParentTrans;

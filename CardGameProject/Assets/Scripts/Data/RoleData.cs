@@ -7,11 +7,16 @@ public class RoleData {
 
     public int hp;
 
+    public int energy;
+
+    public int maxEnergy;
+
     public RoleData (RoleType roleType) {
         this.roleType = roleType;
         cards = new List<int> ();
         cards.Add (1);
         hp = 100;
+        energy = maxEnergy = 4;
     }
 
 }

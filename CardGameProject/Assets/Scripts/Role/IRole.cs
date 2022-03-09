@@ -2,6 +2,8 @@ public interface IRole {
 
     void Init ();
 
+    RoleData RoleData { get; }
+
     void DrawStage ();
 
     void MainStage ();

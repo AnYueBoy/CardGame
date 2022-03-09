@@ -8,7 +8,6 @@ public class BattleManager : IBattleManager {
         this.roleList = roleList;
         this.InitRoleCard ();
         App.Make<ITurnManager> ().SetActiveRole (this.roleList[0]);
-
     }
 
     public void InitRoleCard () {
@@ -33,6 +32,10 @@ public class BattleManager : IBattleManager {
             curRoleIndex %= roleList.Count;
             App.Make<ITurnManager> ().SetActiveRole (roleList[curRoleIndex]);
         }
+    }
+
+    public RoleData GetPlayerRoleData () {
+        return this.roleList[0].RoleData;
     }
 
 }

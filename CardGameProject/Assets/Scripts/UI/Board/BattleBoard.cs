@@ -37,7 +37,8 @@ public class BattleBoard : BaseUI {
     }
 
     private void RefreshEnergy () {
-        this.energyText.text = "4/3";
+        RoleData roleData = App.Make<IBattleManager> ().GetPlayerRoleData ();
+        this.energyText.text = roleData.energy + "/" + roleData.maxEnergy;
     }
 
     public void EndStage () {
