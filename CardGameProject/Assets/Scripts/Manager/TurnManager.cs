@@ -1,5 +1,5 @@
 public class TurnManager : ITurnManager {
-    private Role curRole;
+    private IRole curRole;
 
     private TurnStage curTurnStage = TurnStage.DrawStage;
 
@@ -41,7 +41,7 @@ public class TurnManager : ITurnManager {
         return curTurnStage;
     }
 
-    public void SetActiveRole (Role role) {
+    public void SetActiveRole (IRole role) {
         this.curRole = role;
         this.TurnToDrawStage ();
     }

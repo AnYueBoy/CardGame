@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 public class AttackSlot : ISlot {
-    public void DrawStage (Role from, List<int> effectValue, Role to = null) { }
+    public void DrawStage (IRole from, List<int> effectValue, IRole to = null) { }
 
-    public void MainStage (Role from, List<int> effectValue, Role to = null) { }
+    public void MainStage (IRole from, List<int> effectValue, IRole to = null) { }
 
-    public void EndStage (Role from, List<int> effectValue, Role to = null) { }
+    public void EndStage (IRole from, List<int> effectValue, IRole to = null) { }
 
-    public void Trigger (Role from, List<int> effectValue, Role to = null) {
+    public void Trigger (IRole from, List<int> effectValue, IRole to = null) {
         to.Damage (effectValue[0]);
     }
 }

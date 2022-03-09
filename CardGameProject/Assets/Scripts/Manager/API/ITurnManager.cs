@@ -4,5 +4,5 @@ public interface ITurnManager {
 
     void NextStage ();
 
-    void SetActiveRole (Role role);
+    void SetActiveRole (IRole role);
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UFramework.FrameUtil;
 using UnityEngine;
 
-public class Role : MonoBehaviour {
+public class Player : MonoBehaviour, IRole {
     private RoleData roleData;
 
     private List<Card> cards;
@@ -12,8 +12,9 @@ public class Role : MonoBehaviour {
 
     private int normalMaxCardCount;
     private float totalAngle;
-    public void Init (RoleType roleType) {
-        roleData = new RoleData (roleType);
+    public void Init () {
+        // TODO: 根据玩家数据读取角色类型
+        roleData = new RoleData (RoleType.Warrior);
         cards = new List<Card> ();
 
         float halfRadians = Mathf.Asin (arcRadius / 2 / radius);

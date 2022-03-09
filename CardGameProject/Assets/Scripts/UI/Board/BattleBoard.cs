@@ -12,22 +12,23 @@ public class BattleBoard : BaseUI {
     }
 
     private void SpawnRoles () {
-        // 生成玩家与敌人
-        List<Role> roleList = new List<Role> ();
-        GameObject rolePrefab = App.Make<IAssetsManager> ().GetAssetByUrlSync<GameObject> ("Role/Role");
-        GameObject playerNode = App.Make<IObjectPool> ().RequestInstance (rolePrefab);
+        // 生成玩家
+        List<IRole> roleList = new List<IRole> ();
+        GameObject playerPrefab = App.Make<IAssetsManager> ().GetAssetByUrlSync<GameObject> ("Role/Player");
+        GameObject playerNode = App.Make<IObjectPool> ().RequestInstance (playerPrefab);
         playerNode.transform.SetParent (rolesTrans);
-        Role player = playerNode.GetComponent<Role> ();
+        Player player = playerNode.GetComponent<Player> ();
         // 设置玩家卡牌父节点
         player.SetCardParent (cardParentTrans);
-        player.Init (RoleType.Warrior);
+        player.Init ();
         roleList.Add (player);
 
-        GameObject enemyNode = App.Make<IObjectPool> ().RequestInstance (rolePrefab);
+        GameObject enemyPrefab = App.Make<IAssetsManager> ().GetAssetByUrlSync<GameObject> ("Role/Enemy");
+        GameObject enemyNode = App.Make<IObjectPool> ().RequestInstance (enemyPrefab);
         enemyNode.transform.SetParent (rolesTrans);
-        Role enemy = enemyNode.GetComponent<Role> ();
+        Enemy enemy = enemyNode.GetComponent<Enemy> ();
         roleList.Add (enemy);
-        enemy.Init (RoleType.Enemy);
+        enemy.Init ();
 
         App.Make<IBattleManager> ().BuildBattleData (roleList);
     }

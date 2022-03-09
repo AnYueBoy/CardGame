@@ -3,7 +3,7 @@ using UnityEngine;
 
 public interface IBattleManager {
 
-    void BuildBattleData (List<Role> enemyList);
+    void BuildBattleData (List<IRole> enemyList);
 
     void InitRoleCard ();
 

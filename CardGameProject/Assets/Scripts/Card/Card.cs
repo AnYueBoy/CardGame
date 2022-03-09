@@ -37,8 +37,8 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         this.rectTransform = GetComponent<RectTransform> ();
     }
 
-    private Role role;
-    public void SetRole (Role role) {
+    private IRole role;
+    public void SetRole (IRole role) {
         this.role = role;
         _slot = new AttackSlot ();
     }
@@ -69,25 +69,23 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         this.cardType.text = GameUtil.GetCardTypeValue (cardType);
     }
 
-    public void DrawStage (Role to = null) {
+    public void DrawStage (IRole to = null) {
         _slot.DrawStage (this.role, cardData.effectValue, to);
     }
 
-    public void MainStage (Role to = null) {
+    public void MainStage (IRole to = null) {
         _slot.MainStage (this.role, cardData.effectValue, to);
     }
 
-    public void EndStage (Role to = null) {
+    public void EndStage (IRole to = null) {
         _slot.EndStage (this.role, cardData.effectValue, to);
     }
 
-    private void Trigger (Role to = null) {
+    private void Trigger (IRole to = null) {
         _slot.Trigger (this.role, cardData.effectValue, to);
     }
 
-    public void OnBeginDrag (PointerEventData eventData) {
-        // Debug.Log ("drag start");
-    }
+    public void OnBeginDrag (PointerEventData eventData) { }
 
     public void OnDrag (PointerEventData eventData) {
         this.parentRectTrans??= this.rectTransform.parent.GetComponent<RectTransform> ();
@@ -96,7 +94,6 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     }
 
     public void OnEndDrag (PointerEventData eventData) {
-        // Debug.Log ("drag end");
         this.Trigger (this.role);
     }
 }

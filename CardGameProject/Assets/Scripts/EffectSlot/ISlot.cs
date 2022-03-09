@@ -2,11 +2,11 @@ using System.Collections.Generic;
 
 public interface ISlot {
 
-    void DrawStage (Role from, List<int> effectValue, Role to = null);
+    void DrawStage (IRole from, List<int> effectValue, IRole to = null);
 
-    void MainStage (Role from, List<int> effectValue, Role to = null);
+    void MainStage (IRole from, List<int> effectValue, IRole to = null);
 
-    void EndStage (Role from, List<int> effectValue, Role to = null);
+    void EndStage (IRole from, List<int> effectValue, IRole to = null);
 
-    void Trigger (Role from, List<int> effectValue, Role to = null);
+    void Trigger (IRole from, List<int> effectValue, IRole to = null);
 }

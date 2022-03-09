@@ -3,16 +3,16 @@ using UFramework.Core;
 using UFramework.GameCommon;
 using UnityEngine;
 public class BattleManager : IBattleManager {
-    private List<Role> roleList;
-    public void BuildBattleData (List<Role> roleList) {
+    private List<IRole> roleList;
+    public void BuildBattleData (List<IRole> roleList) {
         this.roleList = roleList;
-        this.InitRoleCard();
+        this.InitRoleCard ();
 
     }
 
     public void InitRoleCard () {
         // 创建玩家手牌
-        for (var i = 0; i < 12; i++) {
+        for (var i = 0; i < 5; i++) {
             GameObject cardPrefab = App.Make<IAssetsManager> ().GetAssetByUrlSync<GameObject> ("Card");
             GameObject cardNode = App.Make<IObjectPool> ().RequestInstance (cardPrefab);
             CardData cardData = App.Make<IConfigManager> ().GetCardDataById (1);
