@@ -35,12 +35,13 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         this.cardData = cardData;
         this.RefreshCardInfo ();
         this.rectTransform = GetComponent<RectTransform> ();
+
+        _slot = new AttackSlot ();
     }
 
     private IRole role;
     public void SetRole (IRole role) {
         this.role = role;
-        _slot = new AttackSlot ();
     }
 
     private void RefreshCardInfo () {
@@ -82,10 +83,15 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     }
 
     private void Trigger (IRole to = null) {
+        if (cardData.consume > role.RoleData.energy) {
+            return;
+        }
         _slot.Trigger (this.role, cardData.effectValue, to);
         // TODO: 回收卡牌
         App.Make<IObjectPool> ().ReturnInstance (gameObject);
     }
+
+    private readonly float triggerInterval = 40f;
 
     #region   触摸事件
     public void OnBeginDrag (PointerEventData eventData) { }
