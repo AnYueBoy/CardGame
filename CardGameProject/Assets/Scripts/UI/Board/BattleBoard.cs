@@ -7,9 +7,11 @@ using UnityEngine.UI;
 public class BattleBoard : BaseUI {
     [SerializeField] private RectTransform rolesTrans;
     [SerializeField] private RectTransform cardParentTrans;
+    [SerializeField] private Text energyText;
 
     public override void OnShow (params object[] args) {
         SpawnRoles ();
+        RefreshEnergy ();
     }
 
     private void SpawnRoles () {
@@ -32,7 +34,10 @@ public class BattleBoard : BaseUI {
         enemy.Init ();
 
         App.Make<IBattleManager> ().BuildBattleData (roleList);
+    }
 
+    private void RefreshEnergy () {
+        this.energyText.text = "4/3";
     }
 
     public void EndStage () {

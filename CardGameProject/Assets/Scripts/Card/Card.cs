@@ -83,6 +83,8 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     private void Trigger (IRole to = null) {
         _slot.Trigger (this.role, cardData.effectValue, to);
+        // TODO: 回收卡牌
+        App.Make<IObjectPool> ().ReturnInstance (gameObject);
     }
 
     #region   触摸事件
