@@ -9,4 +9,8 @@ public class AttackSlot : ISlot {
     public void Trigger (IRole from, List<int> effectValue, IRole to = null) {
         to.Damage (effectValue[0]);
     }
+
+    public bool IsAimToRole () {
+        return true;
+    }
 }

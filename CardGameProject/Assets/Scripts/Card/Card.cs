@@ -85,6 +85,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         _slot.Trigger (this.role, cardData.effectValue, to);
     }
 
+    #region   触摸事件
     public void OnBeginDrag (PointerEventData eventData) { }
 
     public void OnDrag (PointerEventData eventData) {
@@ -96,4 +97,6 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     public void OnEndDrag (PointerEventData eventData) {
         this.Trigger (this.role);
     }
+
+    #endregion
 }
