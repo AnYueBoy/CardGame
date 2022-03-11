@@ -90,20 +90,37 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IPointerDown
         _slot.Trigger (this.role, cardData.effectValue, to);
         // TODO: 回收卡牌
         App.Make<IObjectPool> ().ReturnInstance (gameObject);
+
     }
 
-    private readonly float triggerInterval = 40f;
+    private readonly float triggerInterval = 200f;
 
     #region   触摸事件
     public void OnBeginDrag (PointerEventData eventData) {
         this.rectTransform.DOKill ();
         this.rectTransform.localEulerAngles = Vector3.zero;
         this.rectTransform.localScale = Vector3.one * 0.7f;
-        this.parentRectTrans??= this.rectTransform.parent.GetComponent<RectTransform> ();
+        if (this.parentRectTrans == null) {
+            this.parentRectTrans = this.rectTransform.parent.GetComponent<RectTransform> ();
+        }
         this.rectTransform.SetAsLastSibling ();
+        this.isEnergyLack = false;
     }
 
+    private bool isEnergyLack = false;
     public void OnDrag (PointerEventData eventData) {
+        float verticalDis = (rectTransform.localPosition.y - this.originPos.y);
+        if (verticalDis >= triggerInterval) {
+            // 到达触发距离
+            float curPlayerEnergy = App.Make<IBattleManager> ().GetPlayerRoleData ().energy;
+            if (curPlayerEnergy < cardData.consume) {
+                // 能量不足
+                this.isEnergyLack = true;
+                this.OnPointerUp (null);
+                return;
+            }
+        }
+
         RectTransformUtility.ScreenPointToLocalPointInRectangle (this.parentRectTrans, eventData.position, eventData.enterEventCamera, out Vector2 localPos);
         this.rectTransform.localPosition = localPos;
     }
@@ -133,11 +150,27 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IPointerDown
     }
 
     public void OnPointerUp (PointerEventData eventData) {
+        if (this.isEnergyLack) {
+            // TODO: 显示能量不足提示
+            this.recoveryCard ();
+            return;
+        }
+        float verticalDis = (rectTransform.localPosition.y - this.originPos.y);
+        Debug.Log ($"distance: {verticalDis}");
+        if (verticalDis < triggerInterval) {
+            this.recoveryCard ();
+            return;
+        }
+
+        // 触发效果
+        Trigger (this.role);
+    }
+
+    private void recoveryCard () {
         this.rectTransform.SetSiblingIndex (this.renderIndex);
         this.rectTransform.DOLocalRotate (originAngle, animationTime);
         this.rectTransform.DOLocalMove (originPos, animationTime);
         this.rectTransform.DOScale (Vector3.one * 0.7f, animationTime);
     }
-
     #endregion
 }
