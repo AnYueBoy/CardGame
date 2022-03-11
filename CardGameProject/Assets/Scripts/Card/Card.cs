@@ -4,7 +4,7 @@ using UFramework.GameCommon;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
+public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerClickHandler {
 
     [SerializeField] private Image cardBg;
 
@@ -94,16 +94,53 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     private readonly float triggerInterval = 40f;
 
     #region   触摸事件
-    public void OnBeginDrag (PointerEventData eventData) { }
+    public void OnBeginDrag (PointerEventData eventData) {
+        Debug.Log ("startDrag");
+    }
 
     public void OnDrag (PointerEventData eventData) {
+        Debug.Log ("drag");
         this.parentRectTrans??= this.rectTransform.parent.GetComponent<RectTransform> ();
         RectTransformUtility.ScreenPointToLocalPointInRectangle (this.parentRectTrans, eventData.position, eventData.enterEventCamera, out Vector2 localPos);
         this.rectTransform.localPosition = localPos;
     }
 
     public void OnEndDrag (PointerEventData eventData) {
-        this.Trigger (this.role);
+        Debug.Log ("dragEnd");
+        // this.Trigger (this.role);
+    }
+
+    private Vector3 originPos;
+    private Vector3 originAngle;
+    public void OnPointerEnter (PointerEventData eventData) {
+        Debug.Log ("enter");
+        SaveCardState ();
+        this.rectTransform.localEulerAngles = Vector3.zero;
+        this.rectTransform.localPosition += Vector3.up * 100;
+    }
+
+    public void OnPointerExit (PointerEventData eventData) {
+        Debug.Log ("exit");
+        rectTransform.localPosition = originPos;
+        rectTransform.localEulerAngles = originAngle;
+    }
+
+    private bool isSaveData = false;
+    private void SaveCardState () {
+        if (isSaveData) {
+            return;
+        }
+        isSaveData = true;
+        this.originPos = rectTransform.localPosition;
+        this.originAngle = rectTransform.localEulerAngles;
+    }
+
+    public void OnPointerDown (PointerEventData eventData) {
+        Debug.Log ("Down");
+    }
+
+    public void OnPointerClick (PointerEventData eventData) {
+        Debug.Log ("Click");
     }
 
     #endregion

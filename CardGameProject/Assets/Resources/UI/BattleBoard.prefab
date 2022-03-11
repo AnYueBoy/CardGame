@@ -1061,6 +1061,9 @@ MonoBehaviour:
   rolesTrans: {fileID: 4252485491103621584}
   cardParentTrans: {fileID: 8091674081564793151}
   energyText: {fileID: 5347921472646565654}
+  angleSlider: {fileID: 0}
+  radiusSlider: {fileID: 0}
+  arcSlider: {fileID: 0}
 --- !u!1 &7359581205713976749
 GameObject:
   m_ObjectHideFlags: 0

@@ -62,8 +62,8 @@ public class Player : MonoBehaviour, IRole {
         this.OrderCards ();
     }
 
-    private readonly float radius = 800f;
-    private readonly float arcRadius = 700f;
+    private readonly float radius = 2316f;
+    private readonly float arcRadius = 1135f;
     private readonly float angleInterval = 15f;
 
     public void OrderCards () {
