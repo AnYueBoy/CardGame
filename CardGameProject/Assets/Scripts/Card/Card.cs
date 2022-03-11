@@ -98,7 +98,9 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IPointerDown
     public void OnBeginDrag (PointerEventData eventData) {
         this.rectTransform.DOKill ();
         this.rectTransform.localEulerAngles = Vector3.zero;
+        this.rectTransform.localScale = Vector3.one * 0.7f;
         this.parentRectTrans??= this.rectTransform.parent.GetComponent<RectTransform> ();
+        this.rectTransform.SetAsLastSibling ();
     }
 
     public void OnDrag (PointerEventData eventData) {
