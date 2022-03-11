@@ -1,4 +1,5 @@
 using System;
+using DG.Tweening;
 using UFramework.Core;
 using UFramework.GameCommon;
 using UnityEngine;
@@ -95,17 +96,19 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IPointerDown
 
     #region   触摸事件
     public void OnBeginDrag (PointerEventData eventData) {
-        Debug.Log ("startDrag");
+        this.rectTransform.DOKill ();
+        this.rectTransform.localEulerAngles = Vector3.zero;
+        this.parentRectTrans??= this.rectTransform.parent.GetComponent<RectTransform> ();
     }
 
     public void OnDrag (PointerEventData eventData) {
-        this.parentRectTrans??= this.rectTransform.parent.GetComponent<RectTransform> ();
         RectTransformUtility.ScreenPointToLocalPointInRectangle (this.parentRectTrans, eventData.position, eventData.enterEventCamera, out Vector2 localPos);
         this.rectTransform.localPosition = localPos;
     }
 
     private Vector3 originPos;
     private Vector3 originAngle;
+    private int renderIndex;
     private bool isSaveData = false;
     private void SaveCardState () {
         if (isSaveData) {
@@ -114,17 +117,24 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IPointerDown
         isSaveData = true;
         this.originPos = rectTransform.localPosition;
         this.originAngle = rectTransform.localEulerAngles;
+        this.renderIndex = this.rectTransform.GetSiblingIndex ();
     }
 
+    private readonly float animationTime = 0.25f;
     public void OnPointerDown (PointerEventData eventData) {
         SaveCardState ();
-        this.rectTransform.localEulerAngles = Vector3.zero;
-        this.rectTransform.localPosition += Vector3.up * 100;
+
+        this.rectTransform.SetSiblingIndex (this.renderIndex + 1);
+        this.rectTransform.DOLocalRotate (Vector3.zero, animationTime);
+        this.rectTransform.DOLocalMoveY (100, animationTime);
+        this.rectTransform.DOScale (Vector3.one, animationTime);
     }
 
     public void OnPointerUp (PointerEventData eventData) {
-        rectTransform.localPosition = originPos;
-        rectTransform.localEulerAngles = originAngle;
+        this.rectTransform.SetSiblingIndex (this.renderIndex);
+        this.rectTransform.DOLocalRotate (originAngle, animationTime);
+        this.rectTransform.DOLocalMove (originPos, animationTime);
+        this.rectTransform.DOScale (Vector3.one * 0.7f, animationTime);
     }
 
     #endregion
