@@ -91,6 +91,11 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IPointerDown
         // TODO: 回收卡牌
         App.Make<IObjectPool> ().ReturnInstance (gameObject);
 
+        if (role.GetType () == typeof (Player)) {
+            Player player = (Player) role;
+            player.RemoveCard (this);
+            player.OrderCards ();
+        }
     }
 
     private readonly float triggerInterval = 200f;
