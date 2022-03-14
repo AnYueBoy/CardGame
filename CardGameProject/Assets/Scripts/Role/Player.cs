@@ -64,7 +64,7 @@ public class Player : MonoBehaviour, IRole {
 
     private readonly float radius = 2316f;
     private readonly float arcRadius = 1135f;
-    private readonly float angleInterval = 15f;
+    private readonly float angleInterval = 5f;
 
     public void RemoveCard (Card card) {
         this.cards.Remove (card);
