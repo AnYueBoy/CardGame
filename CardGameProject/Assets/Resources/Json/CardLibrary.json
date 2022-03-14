@@ -15,6 +15,20 @@
                 9
             ],
             "cardIcon": "Textures/Card/CardIcon/strike"
+        },
+        {
+            "id":2,
+            "cardName":"全身撞击",
+            "cardDescribe":"造成你当前格挡值的伤害",
+            "consume":0,
+            "belongRole":0,
+            "cardType":0,
+            "rarity":0,
+            "slots":[
+                "DefenceAttack"
+            ],
+            "effectValue":[],
+            "cardIcon":"Textures/Card/CardIcon/body_slam"
         }
     ]
 }

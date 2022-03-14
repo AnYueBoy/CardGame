@@ -11,12 +11,15 @@ public class RoleData {
 
     public int maxEnergy;
 
+    public int armor;
+
     public RoleData (RoleType roleType) {
         this.roleType = roleType;
         cards = new List<int> ();
         cards.Add (1);
         hp = 100;
         energy = maxEnergy = 4;
+        armor = 0;
     }
 
 }
