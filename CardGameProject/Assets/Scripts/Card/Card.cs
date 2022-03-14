@@ -1,6 +1,7 @@
 using System;
 using DG.Tweening;
 using UFramework.Core;
+using UFramework.EventDispatcher;
 using UFramework.GameCommon;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -90,15 +91,10 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IPointerDown
         _slot.Trigger (this.role, cardData.effectValue, to);
         // TODO: 回收卡牌
         App.Make<IObjectPool> ().ReturnInstance (gameObject);
-
-        if (role.GetType () == typeof (Player)) {
-            Player player = (Player) role;
-            player.RemoveCard (this);
-            player.OrderCards ();
-        }
+        App.Make<IEventDispatcher> ().Raise (EventTypeEnum.RecycleCard, this, new EventParam (this));
     }
 
-    private readonly float triggerInterval = 200f;
+    private readonly float triggerInterval = 300f;
 
     #region   触摸事件
     public void OnBeginDrag (PointerEventData eventData) {
