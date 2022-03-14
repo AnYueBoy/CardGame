@@ -1,6 +1,6 @@
 using System;
 
-public class GameUtil {
+public class CardUtil {
 
     public static string GetCardBgPath (CardType cardType, RoleType roleType) {
         return "Textures/Card/" + Enum.GetName (typeof (CardType), cardType) + "/" + Enum.GetName (typeof (RoleType), roleType);

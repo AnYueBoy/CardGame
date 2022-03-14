@@ -51,25 +51,25 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IPointerDown
         var belongRole = this.cardData.belongRole;
         var cardRarity = this.cardData.rarity;
 
-        string cardBgPath = GameUtil.GetCardBgPath (cardType, belongRole);
+        string cardBgPath = CardUtil.GetCardBgPath (cardType, belongRole);
         this.cardBg.sprite = App.Make<IAssetsManager> ().GetAssetByUrlSync<Sprite> (cardBgPath);
 
         this.cardIcon.sprite = App.Make<IAssetsManager> ().GetAssetByUrlSync<Sprite> (this.cardData.cardIcon);
 
-        string cardFramePath = GameUtil.GetCardFramePath (cardType);
+        string cardFramePath = CardUtil.GetCardFramePath (cardType);
         this.cardFrame.sprite = App.Make<IAssetsManager> ().GetAssetByUrlSync<Sprite> (cardFramePath);
 
-        string cardBannerPath = GameUtil.GetCardBannerPath (cardRarity);
+        string cardBannerPath = CardUtil.GetCardBannerPath (cardRarity);
         this.cardBanner.sprite = App.Make<IAssetsManager> ().GetAssetByUrlSync<Sprite> (cardBannerPath);
 
         this.cardName.text = this.cardData.cardName;
 
-        string cardConsumePath = GameUtil.GetCardConsumePath (belongRole);
+        string cardConsumePath = CardUtil.GetCardConsumePath (belongRole);
         this.cardConsumeIcon.sprite = App.Make<IAssetsManager> ().GetAssetByUrlSync<Sprite> (cardConsumePath);
 
         this.cardConsume.text = this.cardData.consume.ToString ();
         this.cardDescribe.text = this.cardData.cardDescribe;
-        this.cardType.text = GameUtil.GetCardTypeValue (cardType);
+        this.cardType.text = CardUtil.GetCardTypeValue (cardType);
     }
 
     public void DrawStage (IRole to = null) {
@@ -84,6 +84,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IPointerDown
         _slot.EndStage (this.role, cardData.effectValue, to);
     }
 
+    private readonly float triggerInterval = 300f;
     private void Trigger (IRole to = null) {
         if (cardData.consume > role.RoleData.energy) {
             return;
@@ -93,8 +94,6 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IPointerDown
         App.Make<IObjectPool> ().ReturnInstance (gameObject);
         App.Make<IEventDispatcher> ().Raise (EventTypeEnum.RecycleCard, this, new EventParam (this));
     }
-
-    private readonly float triggerInterval = 300f;
 
     #region   触摸事件
     public void OnBeginDrag (PointerEventData eventData) {
