@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using DG.Tweening;
 using UFramework.Core;
 using UFramework.EventDispatcher;
@@ -28,17 +29,24 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IPointerDown
 
     private CardData cardData;
 
-    private ISlot _slot;
+    private List<ISlot> _slots;
 
     public RectTransform rectTransform;
     private RectTransform parentRectTrans;
 
     public void Init (CardData cardData) {
         this.cardData = cardData;
-        this.RefreshCardInfo ();
+        RefreshCardInfo ();
         this.rectTransform = GetComponent<RectTransform> ();
+        BuildSlot ();
+    }
 
-        _slot = new AttackSlot ();
+    private void BuildSlot () {
+        _slots = new List<ISlot> ();
+        foreach (var slotName in cardData.slots) {
+            ISlot targetSlot = SlotUtil.GetSlot (slotName);
+            _slots.Add (targetSlot);
+        }
     }
 
     private IRole role;
@@ -73,15 +81,21 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IPointerDown
     }
 
     public void DrawStage (IRole to = null) {
-        _slot.DrawStage (this.role, cardData.effectValue, to);
+        foreach (var slot in _slots) {
+            slot.DrawStage (this.role, cardData.effectValue, to);
+        }
     }
 
     public void MainStage (IRole to = null) {
-        _slot.MainStage (this.role, cardData.effectValue, to);
+        foreach (var slot in _slots) {
+            slot.MainStage (this.role, cardData.effectValue, to);
+        }
     }
 
     public void EndStage (IRole to = null) {
-        _slot.EndStage (this.role, cardData.effectValue, to);
+        foreach (var slot in _slots) {
+            slot.EndStage (this.role, cardData.effectValue, to);
+        }
     }
 
     private readonly float triggerInterval = 300f;
@@ -89,7 +103,11 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IPointerDown
         if (cardData.consume > role.RoleData.energy) {
             return;
         }
-        _slot.Trigger (this.role, cardData.effectValue, to);
+
+        foreach (var slot in _slots) {
+            slot.Trigger (this.role, cardData.effectValue, to);
+        }
+
         // TODO: 回收卡牌
         App.Make<IObjectPool> ().ReturnInstance (gameObject);
         App.Make<IEventDispatcher> ().Raise (EventTypeEnum.RecycleCard, this, new EventParam (this));

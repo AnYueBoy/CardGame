@@ -14,6 +14,8 @@ public class CardData {
 
     public CardRarity rarity;
 
+    public List<string> slots;
+
     public string cardIcon;
 
     public List<int> effectValue;

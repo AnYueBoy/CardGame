@@ -8,6 +8,9 @@
             "belongRole": 0,
             "cardType": 0,
             "rarity": 2,
+            "slots": [
+                "Attack"
+            ],
             "effectValue": [
                 9
             ],
