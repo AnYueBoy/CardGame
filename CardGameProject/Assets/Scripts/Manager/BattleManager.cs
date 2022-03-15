@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using UFramework.Core;
+using UFramework.FrameUtil;
 using UFramework.GameCommon;
+using UFramework.Promise;
 using UnityEngine;
 public class BattleManager : IBattleManager {
     private List<IRole> roleList;
@@ -15,7 +17,8 @@ public class BattleManager : IBattleManager {
         for (var i = 0; i < 5; i++) {
             GameObject cardPrefab = App.Make<IAssetsManager> ().GetAssetByUrlSync<GameObject> ("Card");
             GameObject cardNode = App.Make<IObjectPool> ().RequestInstance (cardPrefab);
-            CardData cardData = App.Make<IConfigManager> ().GetCardDataById (1);
+            int cardId = CommonUtil.getRandomValue (1, 2);
+            CardData cardData = App.Make<IConfigManager> ().GetCardDataById (cardId);
             Card card = cardNode.GetComponent<Card> ();
             card.Init (cardData);
             card.SetRole (roleList[0]);
