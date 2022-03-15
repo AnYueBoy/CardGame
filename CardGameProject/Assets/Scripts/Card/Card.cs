@@ -185,6 +185,10 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IPointerDown
             // 卡牌为指向性
             if (IsAimRole())
             {
+                rectTransform.DOLocalMove(Vector3.zero, animationTime);
+                // 生成指向标
+                // eventData.pointerDrag = null;
+                return;
             }
         }
 
