@@ -26,7 +26,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IPointerDown
 
     [SerializeField] private Text cardDescribe;
 
-    [SerializeField] private Text cardType;
+    [SerializeField] private Text cardTypeText;
 
     private CardData cardData;
 
@@ -62,30 +62,45 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IPointerDown
 
     private void RefreshCardInfo()
     {
-        var cardType = this.cardData.cardType;
-        var belongRole = this.cardData.belongRole;
-        var cardRarity = this.cardData.rarity;
+        var cardType = cardData.cardType;
+        var belongRole = cardData.belongRole;
+        var cardRarity = cardData.rarity;
 
         string cardBgPath = CardUtil.GetCardBgPath(cardType, belongRole);
-        this.cardBg.sprite = App.Make<IAssetsManager>().GetAssetByUrlSync<Sprite>(cardBgPath);
+        cardBg.sprite = App.Make<IAssetsManager>().GetAssetByUrlSync<Sprite>(cardBgPath);
 
-        this.cardIcon.sprite = App.Make<IAssetsManager>().GetAssetByUrlSync<Sprite>(this.cardData.cardIcon);
+        cardIcon.sprite = App.Make<IAssetsManager>().GetAssetByUrlSync<Sprite>(this.cardData.cardIcon);
 
         string cardFramePath = CardUtil.GetCardFramePath(cardType);
-        this.cardFrame.sprite = App.Make<IAssetsManager>().GetAssetByUrlSync<Sprite>(cardFramePath);
+        cardFrame.sprite = App.Make<IAssetsManager>().GetAssetByUrlSync<Sprite>(cardFramePath);
 
         string cardBannerPath = CardUtil.GetCardBannerPath(cardRarity);
-        this.cardBanner.sprite = App.Make<IAssetsManager>().GetAssetByUrlSync<Sprite>(cardBannerPath);
+        cardBanner.sprite = App.Make<IAssetsManager>().GetAssetByUrlSync<Sprite>(cardBannerPath);
 
-        this.cardName.text = this.cardData.cardName;
+        cardName.text = cardData.cardName;
 
         string cardConsumePath = CardUtil.GetCardConsumePath(belongRole);
-        this.cardConsumeIcon.sprite = App.Make<IAssetsManager>().GetAssetByUrlSync<Sprite>(cardConsumePath);
+        cardConsumeIcon.sprite = App.Make<IAssetsManager>().GetAssetByUrlSync<Sprite>(cardConsumePath);
 
-        this.cardConsume.text = this.cardData.consume.ToString();
-        this.cardDescribe.text = this.cardData.cardDescribe;
-        this.cardType.text = CardUtil.GetCardTypeValue(cardType);
+        cardConsume.text = cardData.consume.ToString();
+        cardDescribe.text = cardData.cardDescribe;
+        cardTypeText.text = CardUtil.GetCardTypeValue(cardType);
     }
+
+    private bool IsAimRole()
+    {
+        foreach (ISlot slot in _slots)
+        {
+            if (slot.IsAimToRole())
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    #region 卡牌阶段周期
 
     public void DrawStage(IRole to = null)
     {
@@ -130,45 +145,57 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IPointerDown
         App.Make<IEventDispatcher>().Raise(EventTypeEnum.RecycleCard, this, new EventParam(this));
     }
 
+    #endregion
+
+
     #region 触摸事件
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        this.rectTransform.DOKill();
-        this.rectTransform.localEulerAngles = Vector3.zero;
-        this.rectTransform.localScale = Vector3.one * 0.7f;
+        rectTransform.DOKill();
+        rectTransform.localEulerAngles = Vector3.zero;
+        rectTransform.localScale = Vector3.one * 0.7f;
         if (this.parentRectTrans == null)
         {
-            this.parentRectTrans = this.rectTransform.parent.GetComponent<RectTransform>();
+            parentRectTrans = rectTransform.parent.GetComponent<RectTransform>();
         }
 
-        this.rectTransform.SetAsLastSibling();
-        this.isEnergyLack = false;
+        rectTransform.SetAsLastSibling();
+        isEnergyLack = false;
     }
 
     private bool isEnergyLack = false;
 
     public void OnDrag(PointerEventData eventData)
     {
-        float verticalDis = (rectTransform.localPosition.y - this.originPos.y);
+        float verticalDis = (rectTransform.localPosition.y - originPos.y);
+        // 到达触发距离
         if (verticalDis >= triggerInterval)
         {
-            // 到达触发距离
             float curPlayerEnergy = App.Make<IBattleManager>().GetPlayerRoleData().energy;
+            // 能量不足
             if (curPlayerEnergy < cardData.consume)
             {
-                // 能量不足
-                this.isEnergyLack = true;
-                this.OnPointerUp(null);
+                isEnergyLack = true;
+                OnPointerUp(null);
                 // 将本次的拖拽事件失效
                 eventData.pointerDrag = null;
                 return;
             }
+
+            // 卡牌为指向性
+            if (IsAimRole())
+            {
+            }
         }
 
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(this.parentRectTrans, eventData.position,
-            eventData.enterEventCamera, out Vector2 localPos);
-        this.rectTransform.localPosition = localPos;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            parentRectTrans,
+            eventData.position,
+            eventData.enterEventCamera,
+            out Vector2 localPos);
+
+        rectTransform.localPosition = localPos;
     }
 
     private Vector3 originPos;
@@ -184,9 +211,9 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IPointerDown
         }
 
         isSaveData = true;
-        this.originPos = rectTransform.localPosition;
-        this.originAngle = rectTransform.localEulerAngles;
-        this.renderIndex = this.rectTransform.GetSiblingIndex();
+        originPos = rectTransform.localPosition;
+        originAngle = rectTransform.localEulerAngles;
+        renderIndex = rectTransform.GetSiblingIndex();
     }
 
     private readonly float animationTime = 0.25f;
@@ -195,10 +222,10 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IPointerDown
     {
         SaveCardState();
 
-        this.rectTransform.SetSiblingIndex(this.renderIndex + 1);
-        this.rectTransform.DOLocalRotate(Vector3.zero, animationTime);
-        this.rectTransform.DOLocalMoveY(100, animationTime);
-        this.rectTransform.DOScale(Vector3.one, animationTime);
+        rectTransform.SetSiblingIndex(this.renderIndex + 1);
+        rectTransform.DOLocalRotate(Vector3.zero, animationTime);
+        rectTransform.DOLocalMoveY(100, animationTime);
+        rectTransform.DOScale(Vector3.one, animationTime);
     }
 
     public void OnPointerUp(PointerEventData eventData)
@@ -211,14 +238,14 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IPointerDown
         if (this.isEnergyLack)
         {
             // TODO: 显示能量不足提示
-            this.recoveryCard();
+            recoveryCard();
             return;
         }
 
-        float verticalDis = (rectTransform.localPosition.y - this.originPos.y);
+        float verticalDis = (rectTransform.localPosition.y - originPos.y);
         if (verticalDis < triggerInterval)
         {
-            this.recoveryCard();
+            recoveryCard();
             return;
         }
 
@@ -228,10 +255,10 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IPointerDown
 
     private void recoveryCard()
     {
-        this.rectTransform.SetSiblingIndex(this.renderIndex);
-        this.rectTransform.DOLocalRotate(originAngle, animationTime);
-        this.rectTransform.DOLocalMove(originPos, animationTime);
-        this.rectTransform.DOScale(Vector3.one * 0.7f, animationTime);
+        rectTransform.SetSiblingIndex(this.renderIndex);
+        rectTransform.DOLocalRotate(originAngle, animationTime);
+        rectTransform.DOLocalMove(originPos, animationTime);
+        rectTransform.DOScale(Vector3.one * 0.7f, animationTime);
     }
 
     #endregion

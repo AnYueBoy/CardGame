@@ -213,7 +213,7 @@ MonoBehaviour:
   cardConsumeIcon: {fileID: 5869510165558909456}
   cardConsume: {fileID: 5869510164949246091}
   cardDescribe: {fileID: 5869510165576010521}
-  cardType: {fileID: 7156384344662208113}
+  cardTypeText: {fileID: 7156384344662208113}
   rectTransform: {fileID: 5869510164704923742}
 --- !u!1 &5869510164949246088
 GameObject:
