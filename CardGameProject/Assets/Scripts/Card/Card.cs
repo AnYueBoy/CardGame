@@ -69,7 +69,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IPointerDown
         string cardBgPath = CardUtil.GetCardBgPath(cardType, belongRole);
         cardBg.sprite = App.Make<IAssetsManager>().GetAssetByUrlSync<Sprite>(cardBgPath);
 
-        cardIcon.sprite = App.Make<IAssetsManager>().GetAssetByUrlSync<Sprite>(this.cardData.cardIcon);
+        cardIcon.sprite = App.Make<IAssetsManager>().GetAssetByUrlSync<Sprite>(cardData.cardIcon);
 
         string cardFramePath = CardUtil.GetCardFramePath(cardType);
         cardFrame.sprite = App.Make<IAssetsManager>().GetAssetByUrlSync<Sprite>(cardFramePath);
@@ -106,7 +106,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IPointerDown
     {
         foreach (var slot in _slots)
         {
-            slot.DrawStage(this.role, cardData.effectValue, to);
+            slot.DrawStage(role, cardData.effectValue, to);
         }
     }
 
@@ -114,7 +114,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IPointerDown
     {
         foreach (var slot in _slots)
         {
-            slot.MainStage(this.role, cardData.effectValue, to);
+            slot.MainStage(role, cardData.effectValue, to);
         }
     }
 
@@ -122,7 +122,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IPointerDown
     {
         foreach (var slot in _slots)
         {
-            slot.EndStage(this.role, cardData.effectValue, to);
+            slot.EndStage(role, cardData.effectValue, to);
         }
     }
 
@@ -137,7 +137,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IPointerDown
 
         foreach (var slot in _slots)
         {
-            slot.Trigger(this.role, cardData.effectValue, to);
+            slot.Trigger(role, cardData.effectValue, to);
         }
 
         // TODO: 回收卡牌
@@ -147,7 +147,6 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IPointerDown
 
     #endregion
 
-
     #region 触摸事件
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -155,7 +154,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IPointerDown
         rectTransform.DOKill();
         rectTransform.localEulerAngles = Vector3.zero;
         rectTransform.localScale = Vector3.one * 0.7f;
-        if (this.parentRectTrans == null)
+        if (parentRectTrans == null)
         {
             parentRectTrans = rectTransform.parent.GetComponent<RectTransform>();
         }
@@ -222,7 +221,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IPointerDown
     {
         SaveCardState();
 
-        rectTransform.SetSiblingIndex(this.renderIndex + 1);
+        rectTransform.SetSiblingIndex(renderIndex + 1);
         rectTransform.DOLocalRotate(Vector3.zero, animationTime);
         rectTransform.DOLocalMoveY(100, animationTime);
         rectTransform.DOScale(Vector3.one, animationTime);
@@ -235,7 +234,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IPointerDown
             return;
         }
 
-        if (this.isEnergyLack)
+        if (isEnergyLack)
         {
             // TODO: 显示能量不足提示
             recoveryCard();
@@ -250,12 +249,12 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IPointerDown
         }
 
         // 触发效果
-        Trigger(this.role);
+        Trigger(role);
     }
 
     private void recoveryCard()
     {
-        rectTransform.SetSiblingIndex(this.renderIndex);
+        rectTransform.SetSiblingIndex(renderIndex);
         rectTransform.DOLocalRotate(originAngle, animationTime);
         rectTransform.DOLocalMove(originPos, animationTime);
         rectTransform.DOScale(Vector3.one * 0.7f, animationTime);
