@@ -34,6 +34,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IPointerDown
 
     public RectTransform rectTransform;
     private RectTransform parentRectTrans;
+    private Pointer pointer;
 
     public void Init(CardData cardData)
     {
@@ -187,7 +188,12 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IPointerDown
             {
                 rectTransform.DOLocalMove(Vector3.zero, animationTime);
                 // 生成指向标
-                // eventData.pointerDrag = null;
+                if (pointer == null)
+                {
+                    SpawnPointer();
+                }
+
+                pointer.MovePointer(eventData);
                 return;
             }
         }
@@ -265,4 +271,11 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IPointerDown
     }
 
     #endregion
+
+    private void SpawnPointer()
+    {
+        GameObject pointerPrefab = App.Make<IAssetsManager>().GetAssetByUrlSync<GameObject>(ItemUrl.PointerUrl);
+        GameObject pointerNode = App.Make<IObjectPool>().RequestInstance(pointerPrefab);
+        pointer = pointerNode.GetComponent<Pointer>();
+    }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class Pointer : MonoBehaviour
@@ -53,6 +54,10 @@ public class Pointer : MonoBehaviour
 
             pointerRectTransform.localPosition = pointerPos;
         }
+    }
 
+    public void MovePointer(PointerEventData eventData)
+    {
+        
     }
 }
