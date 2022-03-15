@@ -54,6 +54,5 @@ public class Pointer : MonoBehaviour
             pointerRectTransform.localPosition = pointerPos;
         }
 
-        pointerPos.y += topItemInterval;
     }
 }
