@@ -4,7 +4,7 @@
             "id": 1,
             "cardName": "打击",
             "cardDescribe": "造成9点伤害",
-            "consume": 1,
+            "consume": 10,
             "belongRole": 0,
             "cardType": 0,
             "rarity": 2,
