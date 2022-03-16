@@ -165,9 +165,16 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IPointerDown
     }
 
     private bool isEnergyLack = false;
+    private bool isReadyAim = false;
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (isReadyAim)
+        {
+            pointer.MovePointer(eventData);
+            return;
+        }
+
         float verticalDis = (rectTransform.localPosition.y - originPos.y);
         // 到达触发距离
         if (verticalDis >= triggerInterval)
@@ -194,6 +201,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IPointerDown
                 }
 
                 pointer.MovePointer(eventData);
+                isReadyAim = true;
                 return;
             }
         }
@@ -239,6 +247,12 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IPointerDown
 
     public void OnPointerUp(PointerEventData eventData)
     {
+        if (isReadyAim)
+        {
+            Trigger(role);
+            return;
+        }
+
         if (isEnergyLack && eventData != null)
         {
             return;
@@ -276,6 +290,9 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IPointerDown
     {
         GameObject pointerPrefab = App.Make<IAssetsManager>().GetAssetByUrlSync<GameObject>(ItemUrl.PointerUrl);
         GameObject pointerNode = App.Make<IObjectPool>().RequestInstance(pointerPrefab);
+        RectTransform pointerRectTransform = pointerNode.GetComponent<RectTransform>();
+        pointerRectTransform.SetParent(rectTransform);
         pointer = pointerNode.GetComponent<Pointer>();
+        pointer.SetParentRectTransform(rectTransform);
     }
 }

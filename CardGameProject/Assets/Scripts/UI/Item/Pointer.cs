@@ -17,8 +17,12 @@ public class Pointer : MonoBehaviour
 
     private void OnEnable()
     {
-        parentRectTransform ??= GetComponent<RectTransform>();
         BuildPointerItem();
+    }
+
+    public void SetParentRectTransform(RectTransform parentRectTransform)
+    {
+        this.parentRectTransform = parentRectTransform;
     }
 
     private void BuildPointerItem()
