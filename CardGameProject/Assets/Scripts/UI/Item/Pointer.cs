@@ -60,6 +60,11 @@ public class Pointer : MonoBehaviour
 
     public void MovePointer(Vector2 localPos)
     {
+        if (gameObject.activeSelf == false)
+        {
+            gameObject.SetActive(true);
+        }
+
         drawPointList = BeizerUtil.GetBeizerPointList(Vector3.zero, new Vector3(0, 430, 0),
             new Vector3(localPos.x, localPos.y, 1), pointerLength);
         refreshItem(drawPointList);
@@ -71,6 +76,17 @@ public class Pointer : MonoBehaviour
         {
             Vector3 itemPos = drawPointList[i];
             pointerItemList[i].localPosition = itemPos;
+
+            Vector3 diffVec = itemPos - drawPointList[0];
+            float angle = 0;
+            if (diffVec.y != 0)
+            {
+                angle = Mathf.Atan(diffVec.x / diffVec.y);
+                angle *= 180 / Mathf.PI;
+            }
+
+            Debug.Log($"angle： {angle}");
+            pointerItemList[i].localEulerAngles = new Vector3(0, 0, -angle);
         }
     }
 }

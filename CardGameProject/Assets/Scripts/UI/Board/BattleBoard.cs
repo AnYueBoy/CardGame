@@ -70,6 +70,7 @@ public class BattleBoard : BaseUI
         RectTransform pointerRectTransform = pointerNode.GetComponent<RectTransform>();
         pointerRectTransform.SetParent(pointerParent, false);
         pointerRectTransform.localPosition = Vector3.down * 150;
+        pointerNode.SetActive(false);
 
         _pointer = pointerNode.GetComponent<Pointer>();
     }
