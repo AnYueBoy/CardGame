@@ -21,4 +21,9 @@ public class BeizerUtil
 
         return targetPointList;
     }
+
+    public static Vector3 GetTangent(float t,Vector3 originPoint, Vector3 controlPoint, Vector3 endPoint)
+    {
+        return 2 * (1 - t) * originPoint + 2 * controlPoint - 4 * t * controlPoint + 2 * t * endPoint;
+    }
 }

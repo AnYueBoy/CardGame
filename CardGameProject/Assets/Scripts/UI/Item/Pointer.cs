@@ -56,7 +56,9 @@ public class Pointer : MonoBehaviour
         }
     }
 
-    private List<Vector3> drawPointList;
+    private Vector3 originPoint = Vector3.zero;
+    private Vector3 controlPoint = new Vector3(0, 630, 0);
+    private Vector3 endPoint;
 
     public void MovePointer(Vector2 localPos)
     {
@@ -65,28 +67,32 @@ public class Pointer : MonoBehaviour
             gameObject.SetActive(true);
         }
 
-        drawPointList = BeizerUtil.GetBeizerPointList(Vector3.zero, new Vector3(0, 430, 0),
-            new Vector3(localPos.x, localPos.y, 1), pointerLength);
+        endPoint = new Vector3(localPos.x, localPos.y, 1);
+        List<Vector3> drawPointList = BeizerUtil.GetBeizerPointList(originPoint, controlPoint, endPoint, pointerLength);
+
         refreshItem(drawPointList);
     }
 
     private void refreshItem(List<Vector3> itemPosList)
     {
-        for (int i = 0; i < drawPointList.Count; i++)
+        for (int i = 0; i < itemPosList.Count; i++)
         {
-            Vector3 itemPos = drawPointList[i];
+            Vector3 itemPos = itemPosList[i];
             pointerItemList[i].localPosition = itemPos;
 
-            Vector3 diffVec = itemPos - drawPointList[0];
+            Vector3 tangentDir = BeizerUtil.GetTangent(i, originPoint, controlPoint, endPoint);
+            tangentDir.Normalize();
+            Debug.Log($"tangentDir: {tangentDir}");
+
             float angle = 0;
-            if (diffVec.y != 0)
+            if (tangentDir.y != 0)
             {
-                angle = Mathf.Atan(diffVec.x / diffVec.y);
+                angle = Mathf.Atan(tangentDir.x / tangentDir.y);
                 angle *= 180 / Mathf.PI;
             }
 
             Debug.Log($"angle： {angle}");
-            pointerItemList[i].localEulerAngles = new Vector3(0, 0, -angle);
+            pointerItemList[i].localEulerAngles = new Vector3(0, 0, angle);
         }
     }
 }
