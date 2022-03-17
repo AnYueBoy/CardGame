@@ -51,6 +51,11 @@ namespace UFramework.GameCommon {
             }
         }
 
+        public T GetCurBoard<T>() where T : BaseUI
+        {
+            return this.currentBoard as T;
+        }
+
         public void ShowDialog (string uiName, params object[] args) {
             this.showUI (uiName, args);
         }

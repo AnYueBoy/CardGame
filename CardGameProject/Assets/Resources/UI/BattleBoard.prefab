@@ -343,7 +343,7 @@ RectTransform:
   - {fileID: 5828470608333073794}
   - {fileID: 5599039296358739456}
   m_Father: {fileID: 5938914494488273319}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -721,7 +721,7 @@ RectTransform:
   - {fileID: 6984488864500060606}
   - {fileID: 5348089126441778915}
   m_Father: {fileID: 5938914494488273319}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -817,6 +817,41 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &5140453699001549337
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6170438892017880920}
+  m_Layer: 5
+  m_Name: PointerParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &6170438892017880920
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5140453699001549337}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5938914494488273319}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -266}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &5244792153655277198
@@ -1036,6 +1071,7 @@ RectTransform:
   - {fileID: 5616091641171456581}
   - {fileID: 4252485491103621584}
   - {fileID: 8091674081564793151}
+  - {fileID: 6170438892017880920}
   - {fileID: 4980982029719819678}
   - {fileID: 102873258684762029}
   m_Father: {fileID: 0}
@@ -1061,9 +1097,7 @@ MonoBehaviour:
   rolesTrans: {fileID: 4252485491103621584}
   cardParentTrans: {fileID: 8091674081564793151}
   energyText: {fileID: 5347921472646565654}
-  angleSlider: {fileID: 0}
-  radiusSlider: {fileID: 0}
-  arcSlider: {fileID: 0}
+  pointerParent: {fileID: 6170438892017880920}
 --- !u!1 &7359581205713976749
 GameObject:
   m_ObjectHideFlags: 0

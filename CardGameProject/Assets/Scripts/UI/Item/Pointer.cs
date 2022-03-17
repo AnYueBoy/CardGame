@@ -8,32 +8,17 @@ public class Pointer : MonoBehaviour
 {
     [SerializeField] private Sprite pointerBottom;
     [SerializeField] private Sprite pointerTop;
-    [SerializeField] private LineRenderer linerRender;
 
     private readonly int pointerLength = 9;
     private readonly float bottomItemInterval = 64;
     private readonly float topItemInterval = 128;
     private List<RectTransform> pointerItemList;
-    private RectTransform parentRectTransform;
     private RectTransform rectTransform;
 
     private void OnEnable()
     {
         rectTransform ??= GetComponent<RectTransform>();
         BuildPointerItem();
-    }
-
-    private void Update()
-    {
-        if (drawPointList != null && drawPointList.Count > 0)
-        {
-            linerRender.SetPositions(drawPointList.ToArray());
-        }
-    }
-
-    public void SetParentRectTransform(RectTransform parentRectTransform)
-    {
-        this.parentRectTransform = parentRectTransform;
     }
 
     private void BuildPointerItem()
@@ -73,17 +58,19 @@ public class Pointer : MonoBehaviour
 
     private List<Vector3> drawPointList;
 
-    public void MovePointer(PointerEventData eventData)
+    public void MovePointer(Vector2 localPos)
     {
-        Debug.Log("Convert");
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            parentRectTransform,
-            eventData.position,
-            eventData.enterEventCamera,
-            out Vector2 localPos);
+        drawPointList = BeizerUtil.GetBeizerPointList(Vector3.zero, new Vector3(0, 430, 0),
+            new Vector3(localPos.x, localPos.y, 1), pointerLength);
+        refreshItem(drawPointList);
+    }
 
-        Vector3 originPos = rectTransform.localPosition;
-        drawPointList = BeizerUtil.GetBeizerPointList(originPos, originPos + Vector3.up * 50,
-            new Vector3(localPos.x, localPos.y, 1), 15);
+    private void refreshItem(List<Vector3> itemPosList)
+    {
+        for (int i = 0; i < drawPointList.Count; i++)
+        {
+            Vector3 itemPos = drawPointList[i];
+            pointerItemList[i].localPosition = itemPos;
+        }
     }
 }

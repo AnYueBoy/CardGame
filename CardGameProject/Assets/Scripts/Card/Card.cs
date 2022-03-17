@@ -34,7 +34,6 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IPointerDown
 
     public RectTransform rectTransform;
     private RectTransform parentRectTrans;
-    private Pointer pointer;
 
     public void Init(CardData cardData)
     {
@@ -171,7 +170,9 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IPointerDown
     {
         if (isReadyAim)
         {
-            pointer.MovePointer(eventData);
+            Pointer pointer = App.Make<IUIManager>().GetCurBoard<BattleBoard>().Pointer;
+            Vector2 convertPos = ConvertPos(eventData);
+            pointer.MovePointer(convertPos);
             return;
         }
 
@@ -194,25 +195,27 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IPointerDown
             if (IsAimRole())
             {
                 rectTransform.DOLocalMove(Vector3.zero, animationTime);
-                // 生成指向标
-                if (pointer == null)
-                {
-                    SpawnPointer();
-                }
-
-                pointer.MovePointer(eventData);
+                Pointer pointer = App.Make<IUIManager>().GetCurBoard<BattleBoard>().Pointer;
+                Vector2 convertPos = ConvertPos(eventData);
+                pointer.MovePointer(convertPos);
                 isReadyAim = true;
                 return;
             }
         }
 
+        Vector2 localPos = ConvertPos(eventData);
+        rectTransform.localPosition = localPos;
+    }
+
+    private Vector2 ConvertPos(PointerEventData eventData)
+    {
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
             parentRectTrans,
             eventData.position,
             eventData.enterEventCamera,
             out Vector2 localPos);
 
-        rectTransform.localPosition = localPos;
+        return localPos;
     }
 
     private Vector3 originPos;
@@ -285,14 +288,4 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IPointerDown
     }
 
     #endregion
-
-    private void SpawnPointer()
-    {
-        GameObject pointerPrefab = App.Make<IAssetsManager>().GetAssetByUrlSync<GameObject>(ItemUrl.PointerUrl);
-        GameObject pointerNode = App.Make<IObjectPool>().RequestInstance(pointerPrefab);
-        RectTransform pointerRectTransform = pointerNode.GetComponent<RectTransform>();
-        pointerRectTransform.SetParent(rectTransform);
-        pointer = pointerNode.GetComponent<Pointer>();
-        pointer.SetParentRectTransform(rectTransform);
-    }
 }
