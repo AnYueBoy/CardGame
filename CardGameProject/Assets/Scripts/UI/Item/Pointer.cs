@@ -57,7 +57,7 @@ public class Pointer : MonoBehaviour
     }
 
     private Vector3 originPoint = Vector3.zero;
-    private Vector3 controlPoint = new Vector3(0, 630, 0);
+    private Vector3 controlPoint = new Vector3(0, 530, 0);
     private Vector3 endPoint;
 
     public void MovePointer(Vector2 localPos)
@@ -80,18 +80,23 @@ public class Pointer : MonoBehaviour
             Vector3 itemPos = itemPosList[i];
             pointerItemList[i].localPosition = itemPos;
 
-            Vector3 tangentDir = BeizerUtil.GetTangent(i, originPoint, controlPoint, endPoint);
+            // 获取某一点的切线向量
+            Vector3 tangentDir =
+                BeizerUtil.GetTangent((float) i / itemPosList.Count, originPoint, controlPoint, endPoint);
             tangentDir.Normalize();
-            Debug.Log($"tangentDir: {tangentDir}");
 
+            // 根据切线向量获取角度
             float angle = 0;
             if (tangentDir.y != 0)
             {
-                angle = Mathf.Atan(tangentDir.x / tangentDir.y);
+                angle = Mathf.Atan(Mathf.Abs(tangentDir.x / tangentDir.y));
                 angle *= 180 / Mathf.PI;
             }
 
-            Debug.Log($"angle： {angle}");
+            if ((itemPos - itemPosList[0]).x > 0)
+            {
+                angle = -angle;
+            }
             pointerItemList[i].localEulerAngles = new Vector3(0, 0, angle);
         }
     }
